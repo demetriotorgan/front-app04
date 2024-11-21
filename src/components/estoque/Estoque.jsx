@@ -62,6 +62,18 @@ const notifySucesso = () => toast.success('Produto cadastrado com sucesso', {
   transition: Bounce,
   });
 
+  const notifyErro = () => toast.error('Codigo do produto já existente', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      });
+
 
   const handleSubmit = (e)=>{    
     e.preventDefault();
@@ -79,6 +91,7 @@ const notifySucesso = () => toast.success('Produto cadastrado com sucesso', {
     setPc={setPc}
     setPv={setPv}
     notifySucesso={notifySucesso}
+    notifyErro={notifyErro}
     />
 
 <ToastContainer

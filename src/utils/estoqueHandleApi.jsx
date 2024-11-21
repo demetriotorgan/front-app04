@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const addForm = async(formData,notifySucesso)=>{
+const addForm = async(formData,notifySucesso,notifyErro)=>{
     try {
         const response = await axios.post('https://api-app02.vercel.app/produtos', formData,{
             headers:{
@@ -8,10 +8,12 @@ const addForm = async(formData,notifySucesso)=>{
             }
         })
         console.log('Cadastro enviado com sucesso', response.data);
-        notifySucesso();
-
+        notifySucesso();        
     } catch (error) {
         console.error('Erro ao cadastrar produto', error)
+        if(error.status === 500){
+            notifyErro()
+        }        
     }
 }
 

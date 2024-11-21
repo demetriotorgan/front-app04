@@ -1,18 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './ModalEstoque.css'
 import { formatarData, formataValor, limparCampos } from '../../../utils/formatar';
 import { addForm } from '../../../utils/estoqueHandleApi';
 
 
-const ModalEstoque = ({openModal, setOpenModal, formData, setFormData, setPc, setPv,notifySucesso}) => {
-
+const ModalEstoque = ({openModal, setOpenModal, formData, setFormData, setPc, setPv,notifySucesso,notifyErro}) => {
+    
     const handleClose =()=>{
         setOpenModal(false);        
     };
 
     const enviarForm = (formData)=>{
-        console.log(formData,'Enviand form....');        
-        addForm(formData, notifySucesso);
+        console.log(formData,'Enviand form....');                
+        addForm(formData, notifySucesso,notifyErro);
         limparCampos(setFormData, setPc, setPv);
         setOpenModal(false);
     }
@@ -32,10 +32,10 @@ const ModalEstoque = ({openModal, setOpenModal, formData, setFormData, setPc, se
                         <p>PV: {formataValor(formData.pv)}</p>
                         <p>Data Entrada: {formatarData(formData.dataentrada)}</p>
                         <p>Status: {formData.status} </p>
-                    </div>
+                    </div>                    
                     <div className='modal-button'>
                     <button className='close-button' onClick={()=>enviarForm(formData)}>Enviar</button>
-                    <button className='close-button' onClick={handleClose}>Cancelar</button>                    
+                    <button className='close-button' onClick={handleClose}>Cancelar</button>                                        
                     </div>
             </div>
         </div>
