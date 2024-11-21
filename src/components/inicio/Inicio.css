@@ -1,0 +1,119 @@
+.menu-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 300px; /* Ajuste o tamanho do menu quadrado */
+    height: 300px; /* Altura igual à largura para garantir que seja um quadrado */
+    margin: 0 auto; /* Centraliza o menu na página */
+    /* border: 1px solid var(--color-2); Adiciona uma borda ao menu */
+    border-radius: 8px; /* Arredonda os cantos do quadrado */
+    overflow: hidden; /* Garante que o conteúdo não ultrapasse as bordas */
+    margin-top: 20px;
+  }
+  
+  .menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;    
+    color: var(--color-1);
+    cursor: pointer;
+    transition: background-color 0.3s;    
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+
+  i{
+    font-size: 18pt;
+  }
+  
+  /* Estilos individuais para cada parte */
+  .item1 {
+    background-color: var(--color-1);        
+    text-align: center;
+  }
+
+  .item1 a{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text-color);
+    
+    
+  }
+  
+  .item2 {
+    background-color: var(--color-1);
+    text-align: center;
+  }
+
+  .item2 a{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text-color);
+  }
+  
+  .item3 {    
+    background-color:var(--color-1);
+    text-align: center;
+  }
+
+  .item3 a{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text-color);
+  }
+  
+  .item4 {    
+    background-color: var(--color-1);;
+    text-align: center;
+  }
+
+  .item4 a{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text-color);
+  } 
+
+
+  .info-container{
+    width: 300px; /* Ajuste o tamanho do menu quadrado */    
+    margin: 0 auto; /* Centraliza o menu na página */    
+    overflow: hidden; /* Garante que o conteúdo não ultrapasse as bordas */
+    margin-top: 20px;  
+    color: var(--color-1);
+    border: 1px solid var(--color-2);
+    border-radius: 10px;
+    padding: 10px;
+    
+  }
+  
+  .recentes{            
+    margin-top: 10px;
+  }
+
+  .recentes .card-recente{
+    background-color: var(--color-3);
+    color: var(--color-1);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+
+  .button-info{
+    width: 100%;
+    padding: 12px;        
+    background-color: var(--color-1);
+    color:var(--text-color);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }

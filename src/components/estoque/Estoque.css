@@ -1,0 +1,90 @@
+/* Estilos do Contêiner do Formulário */
+.form-container {
+    width:80%;    
+    margin: 30px auto;
+    padding: 10px;
+    background-color:var(--color-1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+  }
+
+    /* Estilo do Título */
+    .form-title {
+        text-align: center;
+        color: var(--text-color);
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+      
+      /* Estilo do Label */
+      label {
+        display: block;
+        text-align: left;
+        margin-bottom: 8px;
+        color: var(--text-color);
+        font-weight: 500;
+      }
+      
+      /* Estilos dos Campos de Texto */
+      input[type="text"]{
+        width: 90%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        transition: border-color 0.3s ease;
+      }
+      
+      input[type="text"]:focus{
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+      }
+    
+      input[type="date"]{
+        width: 90%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        transition: border-color 0.3s ease;
+      }
+
+/* Estilos do Grupo de Botões de Rádio */
+.radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .radio-group label {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: var(--text-color);   
+    font-size: 13pt;
+  }
+  
+  .radio-group input[type="radio"] {
+    margin: 5px;
+    accent-color: red;
+    padding: 10px;    
+  }
+
+  .button-enviar{
+    width: 100%;
+    padding: 12px;        
+    background-color: var(--color-3);
+    color:var(--color-1);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;  
+    margin-bottom: 15px;  
+  }
+  

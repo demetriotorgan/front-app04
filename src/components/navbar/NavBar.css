@@ -1,0 +1,120 @@
+nav{
+    height: 60px;
+    background-color: var(--color-1);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+nav img{
+    height: 40px;
+    object-fit: contain;
+    margin-left: 20px;    
+}
+
+.links-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+nav .link{
+    height: 100%;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+nav h2{
+    color: var(--text-color);
+    line-height: 10px;
+    margin-top:10px;
+}
+
+nav small{
+    color: var(--text-color);
+}
+
+nav .logo{
+    display: flex;
+    align-items: center;
+}
+
+nav svg{
+    fill:var(--text-color);
+}
+
+#sidebar-active{
+    display: none;
+}
+
+.open-sidebar-button, .close-sidebar-button{
+    padding: 0 20px;
+    display: none;
+}
+
+@media(max-width: 400px){
+    nav {
+        justify-content:flex-end;
+    }
+    nav .logo{
+        margin-right: auto;
+    }
+    nav .home-link{
+        margin-right: auto;
+        color: var(--color-1);
+        background-color: var(--color-3);
+    }
+    
+    nav i{
+        margin-right: 15px;
+        font-size: 13pt;
+    }
+    
+    .links-container{        
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        z-index: 10;
+        width: 200px;
+        background-color: var(--color-1);
+        box-shadow: -5px 0 5px rgba(0, 0, 0, 0.25);
+        padding-top: 15px;        
+        transition: 0.5s ease-out;
+    }
+
+    nav .link{
+        box-sizing: border-box;
+        height: auto;
+        width: 100%;
+        padding: 20px 30px;
+        justify-content: flex-start;
+
+    }
+
+    .open-sidebar-button, .close-sidebar-button{
+        display: block;
+    }
+    
+    #sidebar-active:checked ~ .links-container{        
+        right: 0;
+    }
+
+    #sidebar-active:checked ~ #overlay{        
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9;
+    }
+}
+
