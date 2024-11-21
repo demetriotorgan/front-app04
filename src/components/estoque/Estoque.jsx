@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './Estoque.css'
-import ModalEstoque from './modalEstoque/modalEstoque';
+import ModalEstoque from './modalEstoque/ModalEstoque';
 import { limparCampos } from '../../utils/formatar';
 import 'react-toastify/dist/ReactToastify.css';
 import {Bounce, ToastContainer, toast } from 'react-toastify';
