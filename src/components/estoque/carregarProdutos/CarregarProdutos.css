@@ -1,0 +1,44 @@
+.painel-estoque{
+    width:80%;    
+    margin: 30px auto;
+    padding: 15px;
+    background-color:var(--color-1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;    
+    color: var(--text-color);
+}
+
+.card-info-titulo{
+    margin: 10px;
+}
+
+.button-produtos{
+    width: 100%;
+    padding: 12px;        
+    background-color: var(--color-3);
+    color:var(--color-1);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;  
+    margin-top: 15px;
+    margin-bottom: 10px;  
+}
+
+.card-produto{
+    width:80%;    
+    margin: 10px auto;
+    padding: 10px;       
+    border-radius: 10px;     
+    color: var(--color-1);
+  }
+
+.produto{
+    border: 1px solid var(--color-2);
+    background-color: var(--color-1);
+    color: var(--text-color);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}

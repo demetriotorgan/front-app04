@@ -4,6 +4,8 @@ import ModalEstoque from './modalEstoque/ModalEstoque';
 import { limparCampos } from '../../utils/formatar';
 import 'react-toastify/dist/ReactToastify.css';
 import {Bounce, ToastContainer, toast } from 'react-toastify';
+import CarregarProdutos from './carregarProdutos/CarregarProdutos';
+import BuscaProduto from './buscaProduto/BuscaProduto';
 
 const Estoque = () => {
 const [formData, setFormData] = useState({
@@ -218,6 +220,8 @@ transition={Bounce}
         <button className='button-enviar' type='button' onClick={()=>limparCampos(setFormData, setPc, setPv)}>Limpar Campos</button>
       </form>
     </div>
+    <BuscaProduto />
+    <CarregarProdutos />
     </>
   )
 }

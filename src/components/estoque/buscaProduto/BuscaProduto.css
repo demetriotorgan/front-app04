@@ -1,0 +1,60 @@
+.busca-container{
+    width:80%;    
+    margin: 10px auto;
+    padding: 10px;       
+    border-radius: 10px;     
+    color: var(--color-1);
+    border: 1px solid var(--color-1);
+}
+
+.busca-input label{
+        display: block;
+        text-align: left;
+        margin-bottom: 8px;
+        color: var(--color-1);
+        font-weight: 500;
+}
+
+.busca-input input{
+    margin: 0px;
+    padding: 12px;
+    color: var(--color-1);
+}
+
+.dropdown{
+    background-color:#fff;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;    
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    border-radius: 5px;
+}
+
+.dropdown:empty{
+    border: none;
+}
+
+
+.dropdown-row{
+    cursor: pointer;
+    text-align: start;
+    margin: 2px 0;
+    padding: 5px;
+}
+
+.card-produto-pesquisado:empty{
+    border: none;
+}
+
+.card-produto-pesquisado{
+    width:80%;    
+    margin: 10px auto;
+    padding: 10px;       
+    border-radius: 10px;     
+    color: var(--color-1);
+    border: 1px solid var(--color-1);    
+}
+
+.card-produto-pesquisado p{
+    padding: 5px;
+}

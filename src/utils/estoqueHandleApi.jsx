@@ -1,5 +1,14 @@
 import axios from 'axios'
 
+const getProdutos = async (setProdutos)=>{
+    axios
+        .get('https://api-app02.vercel.app/produtos')
+        .then(({data})=>{
+            console.log('data-->', data)
+            setProdutos(data)            
+        })
+}
+
 const addForm = async(formData,notifySucesso,notifyErro)=>{
     try {
         const response = await axios.post('https://api-app02.vercel.app/produtos', formData,{
@@ -17,4 +26,4 @@ const addForm = async(formData,notifySucesso,notifyErro)=>{
     }
 }
 
-export {addForm}
+export {addForm, getProdutos}
