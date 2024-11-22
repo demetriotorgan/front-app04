@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import './Estoque.css'
 import ModalEstoque from './modalEstoque/ModalEstoque';
 import { limparCampos } from '../../utils/formatar';
-import 'react-toastify/dist/ReactToastify.css';
-import {Bounce, ToastContainer, toast } from 'react-toastify';
 import CarregarProdutos from './carregarProdutos/CarregarProdutos';
 import BuscaProduto from './buscaProduto/BuscaProduto';
+import { notifyErro, notifySucesso } from '../../utils/mensagens';
+import 'react-toastify/dist/ReactToastify.css';
+import {Bounce, ToastContainer, toast } from 'react-toastify';
 
 const Estoque = () => {
 const [formData, setFormData] = useState({
@@ -52,36 +53,11 @@ const handlePV = (e)=>{
   })
 }
 
-const notifySucesso = () => toast.success('Produto cadastrado com sucesso', {
-  position: "top-center",
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "light",
-  transition: Bounce,
-  });
-
-  const notifyErro = () => toast.error('Codigo do produto já existente', {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-      });
-
-
-  const handleSubmit = (e)=>{    
+const handleSubmit = (e)=>{    
     e.preventDefault();
     console.log(formData);
     setOpenModal(true);
-  }
+}
   //---------------------------------------------
   return (
     <>

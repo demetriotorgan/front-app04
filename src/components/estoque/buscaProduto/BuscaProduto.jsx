@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './BuscaProduto.css'
-import { getProdutos } from '../../../utils/estoqueHandleApi';
+import { deleteProdutoPesquisa, getProdutos } from '../../../utils/estoqueHandleApi';
 import { formatarData, formataValor } from '../../../utils/formatar';
+import { deleteSucesso } from '../../../utils/mensagens';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const BuscaProduto = () => {
     const [produtos, setProdutos] = useState([]);
@@ -18,7 +22,7 @@ const exibirProduto = (item)=>{
 }
 
   return (
-   <>
+   <>    
    <div className='busca-container'>
     <div className='busca-input'>
         <label>Produto:</label>
@@ -50,6 +54,8 @@ const exibirProduto = (item)=>{
       <p>PC: {formataValor(produtoPesquisado.pc)}</p>
       <p>PV: {formataValor(produtoPesquisado.pv)}</p>
       <p>Status: {produtoPesquisado.status}</p>
+      <button className='buttonEditar-produto-estoque'>Editar</button>
+      <button className='buttonExcluir-produto-estoque' onClick={()=>deleteProdutoPesquisa(produtoPesquisado._id, setProdutoPesquisado, setCodigoProduto, deleteSucesso)}>Excluir</button>
       </div>
       }  
    </div>

@@ -58,3 +58,31 @@
 .card-produto-pesquisado p{
     padding: 5px;
 }
+
+.buttonEditar-produto-estoque{
+    width: 100%;
+    padding: 12px;        
+    background-color: var(--color-1);
+    color:var(--color-3);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;  
+    margin-top: 15px;
+    margin-bottom: 5px;  
+}
+
+.buttonExcluir-produto-estoque{
+    width: 100%;
+    padding: 12px;        
+    background-color: #e64545;
+    color:#fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;  
+    margin-top: 5px;
+    margin-bottom: 10px;  
+}

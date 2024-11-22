@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './CarregarProdutos.css'
-import { getProdutos } from '../../../utils/estoqueHandleApi';
+import { deleteProdutoEstoque, getProdutos } from '../../../utils/estoqueHandleApi';
 import { formatarData, formataValor } from '../../../utils/formatar';
+import 'react-toastify/dist/ReactToastify.css';
+import { deleteSucesso } from '../../../utils/mensagens';
 
 const CarregarProdutos = () => {
     const [produtos, setProdutos] = useState([]);
@@ -28,7 +30,7 @@ const contarCondicional = (produtos)=>{
 }
 
   return (
-    <>
+    <>    
     <div className='painel-estoque'>
         <div className='card-info'>
             <h2 className='card-info-titulo'>Informações do Estoque</h2>
@@ -51,6 +53,8 @@ const contarCondicional = (produtos)=>{
             <p><strong>PC:</strong> {formataValor(produto.pc)}</p>
             <p><strong>PV:</strong> {formataValor(produto.pv)}</p>
             <p><strong>Status:</strong> {produto.status}</p>
+            <button className='buttonEditar-produto'>Editar</button>
+            <button className='buttonExcluir-produto-estoque' onClick={()=>deleteProdutoEstoque(produto._id, setProdutos, deleteSucesso)}>Excluir</button>
             </div>
         ))}
     </div>

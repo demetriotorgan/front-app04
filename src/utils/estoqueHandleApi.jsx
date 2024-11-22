@@ -26,4 +26,33 @@ const addForm = async(formData,notifySucesso,notifyErro)=>{
     }
 }
 
-export {addForm, getProdutos}
+const deleteProdutoPesquisa = (_id, setProdutoPesquisado, setCodigoProduto, deleteSucesso)=>{
+    try {
+        axios
+            .post('https://api-app02.vercel.app/produtos/delete',{_id})
+            .then((data)=>{
+                console.log(data);
+                setProdutoPesquisado('');
+                setCodigoProduto('');                
+                deleteSucesso();
+            })
+    } catch (error) {
+        console.error('Erro ao deletar produto')
+    }
+}
+
+const deleteProdutoEstoque = (_id, setProdutos,deleteSucesso)=>{
+    try {
+        axios
+            .post('https://api-app02.vercel.app/produtos/delete',{_id})
+            .then((data)=>{
+                console.log(data);
+                getProdutos(setProdutos);                
+                deleteSucesso();
+            })
+    } catch (error) {
+        console.error('Erro ao deletar produto')
+    }
+}
+
+export {addForm, getProdutos, deleteProdutoPesquisa, deleteProdutoEstoque}
