@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './CarregarProdutos.css'
 import { deleteProdutoEstoque, getProdutos } from '../../../utils/estoqueHandleApi';
-import { formatarData, formataValor } from '../../../utils/formatar';
+import { formatarDataEditar, formatarDataExibir, formataValor, voltarAoTopo } from '../../../utils/formatar';
 import 'react-toastify/dist/ReactToastify.css';
 import { deleteSucesso } from '../../../utils/mensagens';
 
-const CarregarProdutos = () => {
+const CarregarProdutos = ({setFormData,setUpdate,setProdutoId,setPc,setPv}) => {
     const [produtos, setProdutos] = useState([]);
     const [exibirProdutos, setExibirProdutos] = useState(false);
 
@@ -29,6 +29,21 @@ const contarCondicional = (produtos)=>{
     return produtos.filter(item => item.status === 'CONDICIONAL').length;
 }
 
+const updateMode = (_id, produto)=>{
+    setUpdate(true)
+    setProdutoId(_id)            
+    setFormData({
+      codigo:produto.codigo,
+      descricao:produto.descricao,
+      grade:produto.grade,      
+      pc: setPc(produto.pc),
+      pv: setPv(produto.pv),
+      dataentrada: formatarDataEditar(produto.dataentrada),  
+      status:produto.status,
+    })
+    voltarAoTopo();
+}
+
   return (
     <>    
     <div className='painel-estoque'>
@@ -48,12 +63,13 @@ const contarCondicional = (produtos)=>{
         {produtos.map((produto, index)=>(
             <div key={index} className='produto'>
             <p><strong>Codigo:</strong> {produto.codigo}</p>
-            <p><strong>Data de Entrada</strong>: {formatarData(produto.dataentrada)}</p>
+            <p><strong>Data de Entrada</strong>: {formatarDataExibir(produto.dataentrada)}</p>
             <p><strong>Descrição:</strong> {produto.descricao}</p>
+            <p><strong>Grade: </strong>{produto.grade}</p>
             <p><strong>PC:</strong> {formataValor(produto.pc)}</p>
             <p><strong>PV:</strong> {formataValor(produto.pv)}</p>
             <p><strong>Status:</strong> {produto.status}</p>
-            <button className='buttonEditar-produto'>Editar</button>
+            <button className='buttonEditar-produto' onClick={()=>updateMode(produto._id, produto)}>Editar</button>
             <button className='buttonExcluir-produto-estoque' onClick={()=>deleteProdutoEstoque(produto._id, setProdutos, deleteSucesso)}>Excluir</button>
             </div>
         ))}

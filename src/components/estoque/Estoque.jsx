@@ -4,9 +4,10 @@ import ModalEstoque from './modalEstoque/ModalEstoque';
 import { limparCampos } from '../../utils/formatar';
 import CarregarProdutos from './carregarProdutos/CarregarProdutos';
 import BuscaProduto from './buscaProduto/BuscaProduto';
-import { notifyErro, notifySucesso } from '../../utils/mensagens';
+import { notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyErro, notifyErroDelete, notifySucesso } from '../../utils/mensagens';
 import 'react-toastify/dist/ReactToastify.css';
 import {Bounce, ToastContainer, toast } from 'react-toastify';
+import { editarForm } from '../../utils/estoqueHandleApi';
 
 const Estoque = () => {
 const [formData, setFormData] = useState({
@@ -22,6 +23,9 @@ const [formData, setFormData] = useState({
 const [pc, setPc] = useState('');
 const [pv, setPv] = useState('');
 const [openModal, setOpenModal] = useState(false);
+const [update, setUpdate] = useState(false);
+const [produtoId, setProdutoId] = useState('');
+
 
 const handleChange = (e)=>{
   const {name, value} = e.target;
@@ -70,6 +74,7 @@ const handleSubmit = (e)=>{
     setPv={setPv}
     notifySucesso={notifySucesso}
     notifyErro={notifyErro}
+    notifyErroDelete={notifyErroDelete}
     />
 
 <ToastContainer
@@ -192,12 +197,30 @@ transition={Bounce}
             />
           </label>          
         </div>
-        <button className='button-enviar' type='submit'>Enviar</button>
-        <button className='button-enviar' type='button' onClick={()=>limparCampos(setFormData, setPc, setPv)}>Limpar Campos</button>
+        {update ? '' : <button className='button-enviar' type='submit'>Enviar</button>}                
+        <button 
+          className='button-enviar' 
+          type='button'           
+          onClick={update ? ()=>editarForm(formData, produtoId, notifyAtualizarProduto, notifyAtualizarProdutoErro, setFormData, setPc, setPv) : ()=>limparCampos(setFormData, setPc, setPv)}>
+            {update ? "Atualizar" : "Limpar Campos"}
+        </button>
       </form>
+      
     </div>
-    <BuscaProduto />
-    <CarregarProdutos />
+    <BuscaProduto     
+    setFormData={setFormData}     
+    setUpdate={setUpdate} 
+    setProdutoId={setProdutoId}     
+    setPc={setPc} 
+    setPv={setPv}     
+    />
+    <CarregarProdutos
+    setFormData={setFormData}     
+    setUpdate={setUpdate} 
+    setProdutoId={setProdutoId}     
+    setPc={setPc} 
+    setPv={setPv}     
+    />
     </>
   )
 }

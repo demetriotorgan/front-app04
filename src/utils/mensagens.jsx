@@ -26,6 +26,19 @@ const notifyErro = () => toast.error('Codigo do produto já existente', {
     transition: Bounce,
 });
 
+const notifyErroDelete = () => toast.error('Não foi possível cadastrar novo produto', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Bounce,
+});
+
+
 const deleteSucesso = () => toast.success('Produto excluido com sucesso', {
     position: "top-center",
     autoClose: 5000,
@@ -38,5 +51,28 @@ const deleteSucesso = () => toast.success('Produto excluido com sucesso', {
     transition: Bounce,
     });
 
+const notifyAtualizarProduto = ()=> toast.info('Produto atualizado com sucesso', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Bounce,
+});
 
-export{notifySucesso, notifyErro, deleteSucesso}
+const notifyAtualizarProdutoErro = ()=>toast.warn('Não foi possível atualizar produto', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Bounce,
+    });
+
+export{notifySucesso, notifyErro, deleteSucesso, notifyErroDelete, notifyAtualizarProduto, notifyAtualizarProdutoErro}

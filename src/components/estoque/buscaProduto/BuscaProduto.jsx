@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import './BuscaProduto.css'
 import { deleteProdutoPesquisa, getProdutos } from '../../../utils/estoqueHandleApi';
-import { formatarData, formataValor } from '../../../utils/formatar';
+import { formatarData, formatarDataEditar, formatarDataExibir, formataValor, voltarAoTopo } from '../../../utils/formatar';
 import { deleteSucesso } from '../../../utils/mensagens';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 
-const BuscaProduto = () => {
+const BuscaProduto = ({setFormData, setUpdate, setProdutoId, setPc, setPv}) => {
     const [produtos, setProdutos] = useState([]);
     const [codigoProduto, setCodigoProduto] = useState('');
     const [produtoPesquisado, setProdutoPesquisado] = useState('');    
+    
 
 useEffect(()=>{
     getProdutos(setProdutos);    
@@ -18,8 +19,25 @@ useEffect(()=>{
 
 const exibirProduto = (item)=>{
     setCodigoProduto(item.codigo);
-    setProdutoPesquisado(item);        
+    setProdutoPesquisado(item);            
 }
+
+
+const updateMode =(_id, produto)=>{
+    setUpdate(true)
+    setProdutoId(_id)            
+    setFormData({
+      codigo:produto.codigo,
+      descricao:produto.descricao,
+      grade:produto.grade,      
+      pc: setPc(produto.pc),
+      pv: setPv(produto.pv),
+      dataentrada: formatarDataEditar(produto.dataentrada),  
+      status:produto.status,
+    })
+    voltarAoTopo();
+  }
+  
 
   return (
    <>    
@@ -49,12 +67,13 @@ const exibirProduto = (item)=>{
       {produtoPesquisado && codigoProduto &&
       <div className='card-produto-pesquisado'>
       <p>Codigo: {produtoPesquisado.codigo}</p>
-      <p>Data de Entrada: {formatarData(produtoPesquisado.dataentrada)} </p>
+      <p>Data de Entrada: {formatarDataExibir(produtoPesquisado.dataentrada)} </p>
       <p>Descrição: {produtoPesquisado.descricao}</p>
+      <p>Grade: {produtoPesquisado.grade}</p>
       <p>PC: {formataValor(produtoPesquisado.pc)}</p>
       <p>PV: {formataValor(produtoPesquisado.pv)}</p>
       <p>Status: {produtoPesquisado.status}</p>
-      <button className='buttonEditar-produto-estoque'>Editar</button>
+      <button className='buttonEditar-produto-estoque' onClick={()=>updateMode(produtoPesquisado._id, produtoPesquisado)}>Editar</button>
       <button className='buttonExcluir-produto-estoque' onClick={()=>deleteProdutoPesquisa(produtoPesquisado._id, setProdutoPesquisado, setCodigoProduto, deleteSucesso)}>Excluir</button>
       </div>
       }  

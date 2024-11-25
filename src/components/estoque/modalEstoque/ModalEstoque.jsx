@@ -4,7 +4,7 @@ import { formatarData, formataValor, limparCampos } from '../../../utils/formata
 import { addForm } from '../../../utils/estoqueHandleApi';
 
 
-const ModalEstoque = ({openModal, setOpenModal, formData, setFormData, setPc, setPv,notifySucesso,notifyErro}) => {
+const ModalEstoque = ({openModal, setOpenModal, formData, setFormData, setPc, setPv,notifySucesso,notifyErro,notifyErroDelete}) => {
     
     const handleClose =()=>{
         setOpenModal(false);        
@@ -12,7 +12,7 @@ const ModalEstoque = ({openModal, setOpenModal, formData, setFormData, setPc, se
 
     const enviarForm = (formData)=>{
         console.log(formData,'Enviand form....');                
-        addForm(formData, notifySucesso,notifyErro);
+        addForm(formData, notifySucesso,notifyErro,notifyErroDelete);
         limparCampos(setFormData, setPc, setPv);
         setOpenModal(false);
     }
