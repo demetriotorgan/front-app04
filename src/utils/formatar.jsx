@@ -12,7 +12,7 @@ const formataValor = (valor)=>{
 
 const formatarData = (data)=>{
     const data_formatada = new Date(`${data}T00:00:00`);
-    return data_formatada.toDateString();
+    return format(data_formatada, 'dd LLL yyyy');
 }
 
 const formatarDataEditar = (data)=>{        
