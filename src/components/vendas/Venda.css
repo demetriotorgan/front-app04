@@ -1,0 +1,124 @@
+.form-container{    
+        width: 80%; /* Ajuste o tamanho do menu quadrado */    
+        margin: 0 auto; /* Centraliza o menu na página */    
+        overflow: hidden; /* Garante que o conteúdo não ultrapasse as bordas */
+        margin-top: 20px;  
+        color: var(--color-1);
+        border: 1px solid var(--color-2);
+        border-radius: 10px;
+        padding: 10px;
+        color: var(--text-color); 
+}
+
+.form-container h2{
+    text-align: center;
+}
+
+.form-venda{
+    display: block;
+    text-align: center;   
+}
+
+.button-enviar{
+    width: 100%;
+    padding: 12px;        
+    background-color: var(--color-3);
+    color:var(--color-1);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;  
+    margin-bottom: 15px;  
+  } 
+  
+  .produtos-vendidos{       
+    width: 100%; 
+    text-align: center;       
+    color: var(--color-1);
+    margin: 10px auto;
+    list-style: none;
+  } 
+
+  /* Estilo da tabela */
+.styled-table {
+    border-collapse: collapse;
+    margin: 15px auto;
+    font-size: 1rem;
+    min-width: 95%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;    
+  }
+  
+  /* Cabeçalho da tabela */
+  .styled-table thead tr {
+    background-color: var(--color-2);
+    color: #ffffff;
+    text-align: left;
+  }
+  
+  /* Linhas da tabela */
+  .styled-table th, .styled-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #dddddd;
+  }
+  
+  .styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  /* Efeito de hover nas linhas */
+  .styled-table tbody tr:hover {
+    background-color: #f3f3f3;
+  }
+  
+  /* Última linha sem borda inferior */
+  .styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #fff;
+  }
+
+  .dropdown{
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;    
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  }
+
+  .dropdown:empty{
+    border: none;
+}
+
+  .dropdown-row{
+    cursor: pointer;
+    text-align: start;
+    margin: 0px;
+    color: var(--color-1);
+  }
+
+  .form-container .input-busca-produto{
+    margin: 0px;
+    padding: 12px;    
+  }
+
+  .form-venda select{
+    width: 100%;
+    margin: 0px;
+    padding: 12px;    
+    border-radius: 10px;
+  }
+
+  .lista-produtos{
+    display: flex;
+    align-items: center;
+    margin: 3px;
+  }
+
+  .botao-adicionar-produto{
+    margin: 5px;
+    padding: 5px;
+    border: none;
+    color: var(--color-1);
+    background: none;
+  }

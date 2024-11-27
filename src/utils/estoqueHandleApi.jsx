@@ -3,7 +3,7 @@ import { notifyAtualizarProduto, notifyAtualizarProdutoErro } from './mensagens'
 
 const getProdutos = async (setProdutos)=>{
     axios
-        .get('https://api-app02.vercel.app/produtos')
+        .get('https://api-app03.vercel.app/produtos')
         .then(({data})=>{
             console.log('data-->', data)
             setProdutos(data)            
@@ -12,7 +12,7 @@ const getProdutos = async (setProdutos)=>{
 
 const addForm = async(formData,notifySucesso,notifyErro, notifyErroDelete)=>{
     try {
-        const response = await axios.post('https://api-app02.vercel.app/produtos', formData,{
+        const response = await axios.post('https://api-app03.vercel.app/produtos', formData,{
             headers:{
                 'Content-Type':'application/json'
             }
@@ -32,7 +32,7 @@ const addForm = async(formData,notifySucesso,notifyErro, notifyErroDelete)=>{
 const deleteProdutoPesquisa = (_id, setProdutoPesquisado, setCodigoProduto, deleteSucesso)=>{
     try {
         axios
-            .post('https://api-app02.vercel.app/produtos/delete',{_id})
+            .post('https://api-app03.vercel.app/produtos/delete',{_id})
             .then((data)=>{
                 console.log(data);
                 setProdutoPesquisado('');
@@ -47,7 +47,7 @@ const deleteProdutoPesquisa = (_id, setProdutoPesquisado, setCodigoProduto, dele
 const deleteProdutoEstoque = (_id, setProdutos,deleteSucesso)=>{
     try {
         axios
-            .post('https://api-app02.vercel.app/produtos/delete',{_id})
+            .post('https://api-app03.vercel.app/produtos/delete',{_id})
             .then((data)=>{
                 console.log(data);
                 getProdutos(setProdutos);                
@@ -60,7 +60,7 @@ const deleteProdutoEstoque = (_id, setProdutos,deleteSucesso)=>{
 
 const editarForm = (formData, produtoId, notifyAtualizarProduto, notifyAtualizarProdutoErro, setFormData, setPc, setPv)=>{
     axios
-        .post('https://api-app02.vercel.app/produtos/update', 
+        .post('https://api-app03.vercel.app/produtos/update', 
             {_id: produtoId, 
                 codigo: formData.codigo,
                 descricao: formData.descricao,

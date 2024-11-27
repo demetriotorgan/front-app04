@@ -94,8 +94,7 @@ transition={Bounce}
     <div className='form-container'>
       <form onSubmit={handleSubmit}>
         <h2 className='form-title'>Novo Produto</h2>
-        <label>
-          Código
+        <label>Código</label>
             <input
             type='text'
             name='codigo'
@@ -103,62 +102,52 @@ transition={Bounce}
             onChange={handleChange}
             required
             />
-        </label>
+        
 
-        <label>
-          Descrição
+        <label>Descrição</label>
             <input
             type='text'
             name='descricao'
             value={formData.descricao}
             onChange={handleChange}
             required
-            />
-        </label>
+            />       
 
-        <label>
-          Grade
+        <label>Grade</label>          
             <input
             type='text'
             name='grade'
             value={formData.grade}
             onChange={handleChange}
             required
-            />
-        </label>
+            />      
 
-        <label>
-          P.C
+        <label>P.C</label>
             <input
             type='text'
             name='pc'
             value={pc}
             onChange={handlePC}
             required
-            />
-        </label>
+            />        
 
-        <label>
-          P.V
+        <label>P.V</label>
             <input
             type='text'
             name='pv'
             value={pv}
             onChange={handlePV}
             required
-            />
-        </label>
+            />       
 
-        <label>
-          Data Entrada
+        <label>Data Entrada</label>
             <input
             type='date'
             name='dataentrada'
             value={formData.dataentrada}
             onChange={handleChange}
             required
-            />
-        </label>        
+            />        
 
         <div className='radio-group'>
           <label>
