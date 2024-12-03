@@ -80,6 +80,7 @@ useEffect(()=>{
    setFormVenda={setFormVenda}
    notifyVendaSalva={notifyVendaSalva}
    notifyErroVenda={notifyErroVenda}
+   setAdicionados={setAdicionados}
    />
    <div className='form-container'>
     <h2>Cadastrar Venda</h2>

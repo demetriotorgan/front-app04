@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,notifyErroVenda)=>{
+const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,notifyErroVenda,setAdicionados)=>{
     try {        
         const response = await axios.post('https://api-app03.vercel.app/produtos/venda/save', {
             cliente:formVenda.cliente,
@@ -23,6 +23,7 @@ const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,not
             produtos:'',
             pagamentos:[]
         });
+        setAdicionados([]);
     } catch (error) {
         notifyErroVenda();
         console.error('Erro ao cadastrar venda', error)
