@@ -3,6 +3,9 @@ import './Venda.css'
 import { getProdutos } from '../../utils/estoqueHandleApi';
 import { formataValor } from '../../utils/formatar';
 import ModalVenda from './modalVenda/ModalVenda';
+import { notifyErroVenda, notifyVendaSalva } from '../../utils/mensagens';
+import {Bounce, ToastContainer } from 'react-toastify';
+
 
 const Venda = () => {
   const [formVenda, setFormVenda] = useState({
@@ -12,7 +15,7 @@ const Venda = () => {
     parcelas:'',
     formapagamento:'',
     produtos:'',
-    pagamentos:''
+    pagamentos:[]
   });
 
   const [listaProdutos, setListaProdutos] = useState([]);
@@ -56,11 +59,27 @@ useEffect(()=>{
 
   return (
    <>
+    <ToastContainer
+    position="top-center"
+    autoClose={5000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+    theme="light"
+    transition={Bounce}
+    />
+
    <ModalVenda
    openModal={openModal}
    setOpenModal={setOpenModal}
    formVenda={formVenda}
    setFormVenda={setFormVenda}
+   notifyVendaSalva={notifyVendaSalva}
+   notifyErroVenda={notifyErroVenda}
    />
    <div className='form-container'>
     <h2>Cadastrar Venda</h2>
@@ -85,10 +104,9 @@ useEffect(()=>{
           <select          
           name='parcelas'
           value={formVenda.parcelas}
-          onChange={handleFormVenda}
-          required
+          onChange={handleFormVenda}          
           >
-            <option value="Avista">A vista</option>
+            <option value="vazio"></option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -97,11 +115,12 @@ useEffect(()=>{
           </select>    
 
           <label>Forma de Pagamento</label>
-          <select           
+          <select                     
           name='formapagamento'
           value={formVenda.formapagamento}
           onChange={handleFormVenda}
           >
+            <option value="vazio"></option>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Pix">Pix</option>
             <option value="Cartão">Cartão</option>                
