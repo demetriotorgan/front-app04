@@ -41,7 +41,7 @@ const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,not
     }
 }
 
-const deleteVenda = (_id, setVendas)=>{
+const deleteVenda = (_id, setVendas, setCliente, setVendaPesquisada)=>{
     try {
         console.log(_id);
         axios
@@ -50,6 +50,8 @@ const deleteVenda = (_id, setVendas)=>{
                 console.log('Venda excluida com sucesso ->')
                 console.log(data)
                 getVendas(setVendas);
+                setCliente('');
+                setVendaPesquisada('');
                 notifyVendaExcluida();
             })
     } catch (error) {

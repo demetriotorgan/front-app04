@@ -160,7 +160,7 @@ const ListarVendas = () => {
                 <p className='status-venda-encerrada'> <i className="fa-solid fa-hand-holding-dollar"></i>Venda Encerrada</p> :
                 <p className='status-venda-aberta'>Venda em Aberto</p>}
               </div>
-              <button className='botao-exlcuir-venda' onClick={()=>deleteVenda(venda._id, setVendas)}>Excluir Venda</button>
+              <button className='botao-exlcuir-venda' onClick={()=>deleteVenda(venda._id, setVendas, setCliente, setVendaPesquisada)}>Excluir Venda</button>
           </div>
         ))}
       </div>
