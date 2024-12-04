@@ -1,4 +1,14 @@
 import axios from 'axios'
+import { notifyVendaExcluida } from './mensagens';
+
+const getVendas = async(setVendas)=>{
+    axios
+        .get('https://api-app03.vercel.app/produtos/venda')
+        .then(({data})=>{
+            console.log('Vendas ->', data)
+            setVendas(data);
+        })
+}
 
 const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,notifyErroVenda,setAdicionados)=>{
     try {        
@@ -31,4 +41,20 @@ const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,not
     }
 }
 
-export {addVenda}
+const deleteVenda = (_id, setVendas)=>{
+    try {
+        console.log(_id);
+        axios
+            .delete(`https://api-app03.vercel.app/produtos/venda/${_id}`)
+            .then((data)=>{
+                console.log('Venda excluida com sucesso ->')
+                console.log(data)
+                getVendas(setVendas);
+                notifyVendaExcluida();
+            })
+    } catch (error) {
+        console.error('Erro ao excluir venda');
+    }
+}
+
+export {addVenda, getVendas, deleteVenda}

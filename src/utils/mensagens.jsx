@@ -98,6 +98,41 @@ const notifyErroVenda = () => toast.error('Não foi possível cadastrar nova ven
         theme: "light",
         transition: Bounce,
     });
+
+    const notifyVendaExcluida = ()=>toast.warn('Venda excluida com sucesso', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+
+        const notifyPagemntoSalvo = ()=> toast.info('Pagamento cadastrado com sucesso', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+        });
+        const notifyErroPagamento = () => toast.error('Não foi possível cadastrar novo pagamento', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+        });
     
 
-export{notifySucesso, notifyErro, deleteSucesso, notifyErroDelete, notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyVendaSalva, notifyErroVenda}
+export{notifySucesso, notifyErro, deleteSucesso, notifyErroDelete, notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyVendaSalva, notifyErroVenda, notifyVendaExcluida, notifyPagemntoSalvo, notifyErroPagamento}
