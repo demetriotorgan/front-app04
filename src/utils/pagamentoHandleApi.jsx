@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { notifyErroPagamento, notifyPagemntoSalvo } from './mensagens';
+import { notifyErroPagamento, notifyPagamentoExcluido, notifyPagemntoSalvo } from './mensagens';
 import { getVendas } from './vendaHandleApi';
 
 const addPagamento = (_id, formPagamento, setOpenModal, setCliente, setVendas)=>{
@@ -28,4 +28,19 @@ const addPagamento = (_id, formPagamento, setOpenModal, setCliente, setVendas)=>
             })
 }
 
-export {addPagamento}
+const excluirPagamento = (vendaId, pagamentoId, setVendas,setCliente)=>{
+try {
+    axios
+        .delete(`https://api-app03.vercel.app/produtos/venda/${vendaId}/pagamentos/${pagamentoId}`)
+        .then((data)=>{
+            console.log(data);
+            getVendas(setVendas);
+            setCliente('');
+            notifyPagamentoExcluido();
+        })
+} catch (error) {
+    console.error('Erro ao excluir pagamento');
+}
+}
+
+export {addPagamento, excluirPagamento}

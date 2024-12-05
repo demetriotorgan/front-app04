@@ -5,6 +5,7 @@ import { formatarDataExibir, formataValor } from '../../utils/formatar';
 import SemPagamento from './SemPagamento/SemPagamento';
 import PagamentoModal from './PagamentoModal/PagamentoModal';
 import { Bounce, ToastContainer } from 'react-toastify';
+import { excluirPagamento } from '../../utils/pagamentoHandleApi';
 
 const ListarVendas = () => {
   const [vendas, setVendas] = useState([]);
@@ -117,6 +118,7 @@ const ListarVendas = () => {
                 <p>Valor: {formataValor(pagamento.valor)}</p>
                 <p>Data: {formatarDataExibir(pagamento.data)}</p>
                 <p>Forma: {pagamento.tipo}</p>                
+                <button className='button-excluir-pagamento' onClick={()=>excluirPagamento(vendaPesquisada._id,pagamento._id, setVendas, setCliente)}>Excluir Pagamento</button>
               </div>              
             </div>            
           ))
