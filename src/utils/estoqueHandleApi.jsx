@@ -6,8 +6,24 @@ const getProdutos = async (setProdutos)=>{
         .get('https://api-app03.vercel.app/produtos')
         .then(({data})=>{
             console.log('data-->', data)
-            setProdutos(data)            
+            setProdutos(data);                                    
         })
+}
+
+
+const getProdutosEstoque = async (setProdutos,setProdutosEstoque)=>{
+    try {
+        const response = await axios
+        .get('https://api-app03.vercel.app/produtos')        
+            console.log('data-->', response.data)
+            setProdutos(response.data);                        
+            const produtosEmEstoque = response.data.filter(venda => venda.status === "ESTOQUE");
+            setProdutosEstoque(produtosEmEstoque);
+            console.log('Produto em Estoque:', produtosEmEstoque);             
+    } catch (error) {
+        console.error('Erro ao carregar produtos do estoque');
+    }
+   
 }
 
 const addForm = async(formData,notifySucesso,notifyErro, notifyErroDelete)=>{
@@ -89,4 +105,4 @@ const editarForm = (formData, produtoId, notifyAtualizarProduto, notifyAtualizar
         });
 }
 
-export {addForm, getProdutos, deleteProdutoPesquisa, deleteProdutoEstoque, editarForm}
+export {addForm, getProdutos, getProdutosEstoque, deleteProdutoPesquisa, deleteProdutoEstoque, editarForm}

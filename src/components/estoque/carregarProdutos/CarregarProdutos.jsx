@@ -10,7 +10,7 @@ const CarregarProdutos = ({setFormData,setUpdate,setProdutoId,setPc,setPv}) => {
     const [exibirProdutos, setExibirProdutos] = useState(false);
 
 useEffect(()=>{
-    getProdutos(setProdutos);
+    getProdutos(setProdutos);    
 },[]);
 
 const totalProdutos = (produtos)=>{

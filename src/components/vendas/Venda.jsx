@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Venda.css'
-import { getProdutos } from '../../utils/estoqueHandleApi';
+import { getProdutosEstoque } from '../../utils/estoqueHandleApi';
 import { formataValor } from '../../utils/formatar';
 import ModalVenda from './modalVenda/ModalVenda';
 import { notifyErroVenda, notifyVendaSalva } from '../../utils/mensagens';
@@ -24,9 +24,10 @@ const Venda = () => {
   const [total, setTotal] = useState(0);
   const [openModal, setOpenModal] = useState(false);  
   const [produtosVendidos, setProdutosVendidos] = useState([]);
+  const [produtosEstoque, setProdutosEstoque] = useState([]);
 
 useEffect(()=>{
-  getProdutos(setListaProdutos);
+  getProdutosEstoque(setListaProdutos, setProdutosEstoque);      
 },[]);
 
 useEffect(()=>{
@@ -85,6 +86,8 @@ useEffect(()=>{
    notifyErroVenda={notifyErroVenda}
    setAdicionados={setAdicionados}
    produtosVendidos={produtosVendidos}
+   setListaProdutos={setListaProdutos}
+   setProdutosEstoque={setProdutosEstoque}
    />
    <div className='form-container'>
     <h2>Cadastrar Venda</h2>
@@ -140,7 +143,7 @@ useEffect(()=>{
           onChange={(e)=>setProduto(e.target.value)}
           />
           <div className='dropdown'>
-              {listaProdutos.filter(item =>{
+              {produtosEstoque.filter(item =>{
                 const searchTerm =  produto.toLowerCase();
                 const fullName = item.codigo.toLowerCase();
                 return searchTerm && fullName.startsWith(searchTerm) && fullName !== searchTerm;

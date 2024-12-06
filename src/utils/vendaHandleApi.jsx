@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { notifyStatusAtualizado, notifyVendaExcluida } from './mensagens';
+import { getProdutosEstoque } from './estoqueHandleApi';
 
 const getVendas = async(setVendas)=>{
     axios
@@ -10,7 +11,7 @@ const getVendas = async(setVendas)=>{
         })
 }
 
-const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,notifyErroVenda,setAdicionados, produtosVendidos)=>{
+const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,notifyErroVenda,setAdicionados, produtosVendidos,setListaProdutos,setProdutosEstoque)=>{
     try {        
         const response = await axios.post('https://api-app03.vercel.app/produtos/venda/save', {
             cliente:formVenda.cliente,
@@ -23,7 +24,7 @@ const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,not
         })        
         console.log('Venda cadastrada com sucesso', response.data)
         notifyVendaSalva();
-        updateStatus(produtosVendidos);
+        updateStatus(produtosVendidos,setListaProdutos,setProdutosEstoque);
         setOpenModal(false);
         setFormVenda({
             cliente:'',
@@ -34,7 +35,7 @@ const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,not
             produtos:'',
             pagamentos:[]
         });
-        setAdicionados([]);
+        setAdicionados([]);        
     } catch (error) {
         notifyErroVenda();
         console.error('Erro ao cadastrar venda', error)
@@ -60,18 +61,18 @@ const deleteVenda = (_id, setVendas, setCliente, setVendaPesquisada)=>{
     }
 }
 
-const updateStatus = (produtosVendidos)=>{
+const updateStatus = async (produtosVendidos,setListaProdutos,setProdutosEstoque)=>{
     try {
-        axios
+        const response = await axios
             .put('https://api-app03.vercel.app/produtos/venda',
                 {
                     produtos:produtosVendidos
-                })
-                .then((data)=>{
-                    console.log('Status Atualizados')
-                    console.log(data);
-                    notifyStatusAtualizado();
                 })                
+                    console.log('Status Atualizados')
+                    console.log(response.data);
+                    notifyStatusAtualizado();
+                    getProdutosEstoque(setListaProdutos,setProdutosEstoque);
+                                
     } catch (error) {
         console.log('Erro ao atualizar status: ',error);
     }
