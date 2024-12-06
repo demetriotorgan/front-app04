@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Estoque.css'
 import ModalEstoque from './modalEstoque/ModalEstoque';
 import { limparCampos } from '../../utils/formatar';
@@ -7,7 +7,7 @@ import BuscaProduto from './buscaProduto/BuscaProduto';
 import { notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyErro, notifyErroDelete, notifySucesso } from '../../utils/mensagens';
 import 'react-toastify/dist/ReactToastify.css';
 import {Bounce, ToastContainer, toast } from 'react-toastify';
-import { editarForm } from '../../utils/estoqueHandleApi';
+import { editarForm, getProdutos } from '../../utils/estoqueHandleApi';
 
 const Estoque = () => {
 const [formData, setFormData] = useState({
@@ -25,7 +25,12 @@ const [pv, setPv] = useState('');
 const [openModal, setOpenModal] = useState(false);
 const [update, setUpdate] = useState(false);
 const [produtoId, setProdutoId] = useState('');
+const [produtos, setProdutos] = useState([]);
+const [codigoProduto, setCodigoProduto] = useState('');
 
+useEffect(()=>{
+  getProdutos(setProdutos);    
+},[]);
 
 const handleChange = (e)=>{
   const {name, value} = e.target;
@@ -190,7 +195,7 @@ transition={Bounce}
         <button 
           className='button-enviar' 
           type='button'           
-          onClick={update ? ()=>editarForm(formData, produtoId, notifyAtualizarProduto, notifyAtualizarProdutoErro, setFormData, setPc, setPv) : ()=>limparCampos(setFormData, setPc, setPv)}>
+          onClick={update ? ()=>editarForm(formData, produtoId, notifyAtualizarProduto, notifyAtualizarProdutoErro, setFormData, setPc, setPv, setProdutos,setCodigoProduto) : ()=>limparCampos(setFormData, setPc, setPv)}>
             {update ? "Atualizar" : "Limpar Campos"}
         </button>
       </form>
@@ -202,6 +207,10 @@ transition={Bounce}
     setProdutoId={setProdutoId}     
     setPc={setPc} 
     setPv={setPv}     
+    produtos={produtos}
+    setProdutos={setProdutos}
+    codigoProduto={codigoProduto}
+    setCodigoProduto={setCodigoProduto}
     />
     <CarregarProdutos
     setFormData={setFormData}     
@@ -209,6 +218,8 @@ transition={Bounce}
     setProdutoId={setProdutoId}     
     setPc={setPc} 
     setPv={setPv}     
+    produtos={produtos}
+    setProdutos={setProdutos}
     />
     </>
   )

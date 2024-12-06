@@ -74,7 +74,7 @@ const deleteProdutoEstoque = (_id, setProdutos,deleteSucesso)=>{
     }
 }
 
-const editarForm = (formData, produtoId, notifyAtualizarProduto, notifyAtualizarProdutoErro, setFormData, setPc, setPv)=>{
+const editarForm = (formData, produtoId, notifyAtualizarProduto, notifyAtualizarProdutoErro, setFormData, setPc, setPv, setProdutos, setCodigoProduto)=>{
     axios
         .post('https://api-app03.vercel.app/produtos/update', 
             {_id: produtoId, 
@@ -97,7 +97,10 @@ const editarForm = (formData, produtoId, notifyAtualizarProduto, notifyAtualizar
                 dataentrada: '',  
                 status:'',
               })
-            notifyAtualizarProduto()  
+            setCodigoProduto('');
+            notifyAtualizarProduto(); 
+            getProdutos(setProdutos);
+            
         })
         .catch((err)=>{
             console.log(err)

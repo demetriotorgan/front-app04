@@ -5,17 +5,10 @@ import { formatarData, formatarDataEditar, formatarDataExibir, formataValor, vol
 import { deleteSucesso } from '../../../utils/mensagens';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-
-const BuscaProduto = ({setFormData, setUpdate, setProdutoId, setPc, setPv}) => {
-    const [produtos, setProdutos] = useState([]);
-    const [codigoProduto, setCodigoProduto] = useState('');
-    const [produtoPesquisado, setProdutoPesquisado] = useState('');    
+const BuscaProduto = ({setFormData, setUpdate, setProdutoId, setPc, setPv, produtos, setProdutos, codigoProduto,setCodigoProduto}) => {
     
+    const [produtoPesquisado, setProdutoPesquisado] = useState('');       
 
-useEffect(()=>{
-    getProdutos(setProdutos);    
-},[]);
 
 const exibirProduto = (item)=>{
     setCodigoProduto(item.codigo);
