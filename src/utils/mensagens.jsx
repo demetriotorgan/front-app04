@@ -171,5 +171,17 @@ const notifyErroVenda = () => toast.error('Não foi possível cadastrar nova ven
                 transition: Bounce,
             });
     
+            const notifyStatusAtualizado = ()=>toast.warn('Status do produto atualizado', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+                });
+    
 
-export{notifySucesso, notifyErro, deleteSucesso, notifyErroDelete, notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyVendaSalva, notifyErroVenda, notifyVendaExcluida, notifyPagemntoSalvo, notifyErroPagamento, notifyPagamentoExcluido,notifyPagemntoAtualizado, notifyErroAtualizarPagamento}
+export{notifySucesso, notifyErro, deleteSucesso, notifyErroDelete, notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyVendaSalva, notifyErroVenda, notifyVendaExcluida, notifyPagemntoSalvo, notifyErroPagamento, notifyPagamentoExcluido,notifyPagemntoAtualizado, notifyErroAtualizarPagamento, notifyStatusAtualizado}

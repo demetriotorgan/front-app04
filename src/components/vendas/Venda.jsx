@@ -22,7 +22,8 @@ const Venda = () => {
   const [produto, setProduto] = useState('');
   const [adicionados, setAdicionados] = useState([]);
   const [total, setTotal] = useState(0);
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);  
+  const [produtosVendidos, setProdutosVendidos] = useState([]);
 
 useEffect(()=>{
   getProdutos(setListaProdutos);
@@ -34,13 +35,14 @@ useEffect(()=>{
     ...prevData,
     produtos:[...adicionados],
     valor:total
-  }));
+  }));      
 },[adicionados,total]);
 
-  const addProduto = (item)=>{
-    setAdicionados([...adicionados, item])
+  const addProduto = (item)=>{    
+    setProdutosVendidos([...produtosVendidos, {_id:item._id}]);
+    setAdicionados([...adicionados, item]);        
     setProduto('');
-    console.log('Lista de Adicionados ', adicionados);    
+    console.log('Lista de Adicionados ', adicionados);      
   }
 
   const handleFormVenda = (e)=>{
@@ -55,6 +57,7 @@ useEffect(()=>{
     e.preventDefault()
     setOpenModal(true);
     console.log('Enviando formVenda: ', formVenda);
+    console.log('Produtos Vendidos: ',produtosVendidos);
   }
 
   return (
@@ -81,6 +84,7 @@ useEffect(()=>{
    notifyVendaSalva={notifyVendaSalva}
    notifyErroVenda={notifyErroVenda}
    setAdicionados={setAdicionados}
+   produtosVendidos={produtosVendidos}
    />
    <div className='form-container'>
     <h2>Cadastrar Venda</h2>

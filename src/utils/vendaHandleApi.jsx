@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { notifyVendaExcluida } from './mensagens';
+import { notifyStatusAtualizado, notifyVendaExcluida } from './mensagens';
 
 const getVendas = async(setVendas)=>{
     axios
@@ -10,7 +10,7 @@ const getVendas = async(setVendas)=>{
         })
 }
 
-const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,notifyErroVenda,setAdicionados)=>{
+const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,notifyErroVenda,setAdicionados, produtosVendidos)=>{
     try {        
         const response = await axios.post('https://api-app03.vercel.app/produtos/venda/save', {
             cliente:formVenda.cliente,
@@ -23,6 +23,7 @@ const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,not
         })        
         console.log('Venda cadastrada com sucesso', response.data)
         notifyVendaSalva();
+        updateStatus(produtosVendidos);
         setOpenModal(false);
         setFormVenda({
             cliente:'',
@@ -59,4 +60,21 @@ const deleteVenda = (_id, setVendas, setCliente, setVendaPesquisada)=>{
     }
 }
 
-export {addVenda, getVendas, deleteVenda}
+const updateStatus = (produtosVendidos)=>{
+    try {
+        axios
+            .put('https://api-app03.vercel.app/produtos/venda',
+                {
+                    produtos:produtosVendidos
+                })
+                .then((data)=>{
+                    console.log('Status Atualizados')
+                    console.log(data);
+                    notifyStatusAtualizado();
+                })                
+    } catch (error) {
+        console.log('Erro ao atualizar status: ',error);
+    }
+}
+
+export {addVenda, getVendas, deleteVenda, updateStatus}

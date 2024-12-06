@@ -3,14 +3,14 @@ import './ModalVenda.css'
 import { formatarData, formataValor } from '../../../utils/formatar'
 import { addVenda } from '../../../utils/vendaHandleApi';
 
-const ModalVenda = ({openModal, setOpenModal,formVenda,setFormVenda,notifyVendaSalva,notifyErroVenda,setAdicionados}) => {
+const ModalVenda = ({openModal, setOpenModal,formVenda,setFormVenda,notifyVendaSalva,notifyErroVenda,setAdicionados, produtosVendidos}) => {
     const handleClose = ()=>{
         setOpenModal(false)
     }
 
     const enviarForm = ()=>{
-        console.log('Enviando Form');
-        addVenda(formVenda,notifyVendaSalva, setFormVenda, setOpenModal,notifyErroVenda,setAdicionados); 
+        console.log('Enviando Form');        
+        addVenda(formVenda,notifyVendaSalva, setFormVenda, setOpenModal,notifyErroVenda,setAdicionados,produtosVendidos); 
     }
   return (
     <>
