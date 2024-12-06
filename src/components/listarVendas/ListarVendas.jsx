@@ -44,6 +44,11 @@ const ListarVendas = () => {
   const cadastrarPagamento = (venda)=>{
     setDadosVenda(venda);
     setOpenModal(true);
+    setFormPagamento({
+      data:'',
+      valor:'',
+      tipo:''
+    });
   }
 
   useEffect(()=>{
