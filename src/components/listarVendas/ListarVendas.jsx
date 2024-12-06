@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { deleteVenda, getVendas } from '../../utils/vendaHandleApi';
 import './ListarVendas.css'
-import { formatarDataExibir, formataValor } from '../../utils/formatar';
+import { formatarDataEditar, formatarDataExibir, formataValor } from '../../utils/formatar';
 import SemPagamento from './SemPagamento/SemPagamento';
 import PagamentoModal from './PagamentoModal/PagamentoModal';
 import { Bounce, ToastContainer } from 'react-toastify';
@@ -13,7 +13,20 @@ const ListarVendas = () => {
   const [vendaPesquisada, setVendaPesquisada] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [dadosVenda, setDadosVenda] = useState('');
-  const [exibirVendas, setExibirVendas] = useState(false);
+  const [exibirVendas, setExibirVendas] = useState(false);  
+
+  const [editarVenda, setEditarVenda] = useState('');  
+  const [editarPagamentoId, setEditarPagamentoId] = useState('');  
+  const [editarDataPagamento, setEditarDataPagamento]= useState('');
+  const [valor, setValor] = useState('');
+  const [editarTipoPagamento, setEditarTipoPagamento]= useState('');
+  const [updateMode, setUpdateMode] = useState(false);  
+
+  const [formPagamento, setFormPagamento] = useState({            
+    data:'',
+    valor:'',
+    tipo:''
+})
 
   useEffect(()=>{
     getVendas(setVendas);
@@ -32,6 +45,25 @@ const ListarVendas = () => {
     setDadosVenda(venda);
     setOpenModal(true);
   }
+
+  useEffect(()=>{
+    setFormPagamento({
+      data: editarDataPagamento,
+      valor: valor,
+      tipo: editarTipoPagamento
+    })
+  },[updateMode]);
+
+  const editarPagamento = (vendaAlterar, tipoPagamento, pagamentoId, valorPagamento, dataPagamento)=>{        
+    setEditarVenda(vendaAlterar);
+    setEditarPagamentoId(pagamentoId);    
+    setEditarDataPagamento(formatarDataEditar(dataPagamento));
+    setValor(valorPagamento)
+    setEditarTipoPagamento(tipoPagamento)
+
+    setUpdateMode(true);
+    setOpenModal(true);    
+  }
   return (
     <>
       <PagamentoModal
@@ -39,7 +71,17 @@ const ListarVendas = () => {
       setOpenModal={setOpenModal}
       dadosVenda={dadosVenda}
       setCliente={setCliente}
-      setVendas={setVendas}
+      setVendas={setVendas}      
+      updateMode={updateMode}    
+      setUpdateMode={setUpdateMode}
+      formPagamento={formPagamento}
+      setFormPagamento={setFormPagamento}
+      editarVenda={editarVenda}
+      editarPagamentoId={editarPagamentoId}
+      valor={valor}
+      setValor={setValor}
+      setEditarDataPagamento={setEditarDataPagamento}
+      setEditarTipoPagamento={setEditarTipoPagamento}
       />
       
       <ToastContainer
@@ -119,6 +161,7 @@ const ListarVendas = () => {
                 <p>Data: {formatarDataExibir(pagamento.data)}</p>
                 <p>Forma: {pagamento.tipo}</p>                
                 <button className='button-excluir-pagamento' onClick={()=>excluirPagamento(vendaPesquisada._id,pagamento._id, setVendas, setCliente)}>Excluir Pagamento</button>
+                <button className='button-editar-pagamento' onClick={()=>editarPagamento(vendaPesquisada, pagamento.tipo, pagamento._id, pagamento.valor, pagamento.data)}>Editar Pagamento</button>
               </div>              
             </div>            
           ))

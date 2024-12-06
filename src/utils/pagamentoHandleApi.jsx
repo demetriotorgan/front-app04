@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { notifyErroPagamento, notifyPagamentoExcluido, notifyPagemntoSalvo } from './mensagens';
+import { notifyErroAtualizarPagamento, notifyErroPagamento, notifyPagamentoExcluido, notifyPagemntoAtualizado, notifyPagemntoSalvo } from './mensagens';
 import { getVendas } from './vendaHandleApi';
 
-const addPagamento = (_id, formPagamento, setOpenModal, setCliente, setVendas)=>{
+const addPagamento = (_id, formPagamento, setOpenModal, setCliente, setVendas,setFormPagamento,setValor)=>{
     axios
         .put(`https://api-app03.vercel.app/produtos/venda/${_id}/pagamentos`,
             {
@@ -17,6 +17,12 @@ const addPagamento = (_id, formPagamento, setOpenModal, setCliente, setVendas)=>
                 console.log(data);
                 setOpenModal(false);
                 setCliente('');
+                setFormPagamento({
+                    data:'',
+                    valor:'',
+                    tipo:''
+                });
+                setValor('');
                 getVendas(setVendas);
                 notifyPagemntoSalvo();
             })
@@ -43,4 +49,37 @@ try {
 }
 }
 
-export {addPagamento, excluirPagamento}
+const updatePagamento = (vendaId, pagamentoId, formPagamento, setOpenModal, setCliente, setVendas,setFormPagamento,setValor,setUpdateMode)=>{
+    try {
+        axios
+        .put(`https://api-app03.vercel.app/produtos/venda/${vendaId}/pagamentos/${pagamentoId}`,
+            {
+                novoPagamento: {
+                    data: formPagamento.data , 
+                    valor: formPagamento.valor,
+                    tipo: formPagamento.tipo
+                }
+            })
+            .then((data)=>{
+                console.log('Pagamento atualizado com sucesso');
+                console.log(data);
+                getVendas(setVendas);
+                setOpenModal(false);
+                setCliente('');
+                setFormPagamento({
+                    data:'',
+                    valor:'',
+                    tipo:''
+                })
+                setValor('');
+                setUpdateMode(false);
+                notifyPagemntoAtualizado();
+            })
+    } catch (error) {
+        console.error('Erro ao atualizar pagamento')
+        notifyErroAtualizarPagamento();
+    }
+            
+}
+
+export {addPagamento, excluirPagamento, updatePagamento}
