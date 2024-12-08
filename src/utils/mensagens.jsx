@@ -182,6 +182,53 @@ const notifyErroVenda = () => toast.error('Não foi possível cadastrar nova ven
                 theme: "light",
                 transition: Bounce,
                 });
-    
 
-export{notifySucesso, notifyErro, deleteSucesso, notifyErroDelete, notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyVendaSalva, notifyErroVenda, notifyVendaExcluida, notifyPagemntoSalvo, notifyErroPagamento, notifyPagamentoExcluido,notifyPagemntoAtualizado, notifyErroAtualizarPagamento, notifyStatusAtualizado}
+                const notifySemPagamentosRegistrados = () => toast.error('Sem pagamentos registrados neste período', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+
+                const notifyPagamentosEncontrados = ()=> toast.info('Pagamentos encontrados neste período', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+
+                const notifyVendaAtualizada = ()=> toast.info('Venda atualizada com sucesso', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+
+                const notifyErroAtualizarVenda = () => toast.error('Erro ao atualizar venda', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+
+export{notifySucesso, notifyErro, deleteSucesso, notifyErroDelete, notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyVendaSalva, notifyErroVenda, notifyVendaExcluida, notifyPagemntoSalvo, notifyErroPagamento, notifyPagamentoExcluido,notifyPagemntoAtualizado, notifyErroAtualizarPagamento, notifyStatusAtualizado, notifySemPagamentosRegistrados, notifyPagamentosEncontrados, notifyVendaAtualizada, notifyErroAtualizarVenda}

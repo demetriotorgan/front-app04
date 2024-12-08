@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { notifyStatusAtualizado, notifyVendaExcluida } from './mensagens';
+import { notifyErroAtualizarVenda, notifyStatusAtualizado, notifyVendaAtualizada, notifyVendaExcluida } from './mensagens';
 import { getProdutosEstoque } from './estoqueHandleApi';
 
 const getVendas = async(setVendas)=>{
@@ -11,7 +11,7 @@ const getVendas = async(setVendas)=>{
         })
 }
 
-const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,notifyErroVenda,setAdicionados, produtosVendidos,setListaProdutos,setProdutosEstoque)=>{
+const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,notifyErroVenda,setAdicionados, produtosVendidos,setListaProdutos,setProdutosEstoque,setVendas)=>{
     try {        
         const response = await axios.post('https://api-app03.vercel.app/produtos/venda/save', {
             cliente:formVenda.cliente,
@@ -35,7 +35,8 @@ const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,not
             produtos:'',
             pagamentos:[]
         });
-        setAdicionados([]);        
+        setAdicionados([]); 
+        getVendas(setVendas);
     } catch (error) {
         notifyErroVenda();
         console.error('Erro ao cadastrar venda', error)
@@ -78,4 +79,45 @@ const updateStatus = async (produtosVendidos,setListaProdutos,setProdutosEstoque
     }
 }
 
-export {addVenda, getVendas, deleteVenda, updateStatus}
+const updateVenda = (formVenda, vendaId, setOpenModal, setFormVenda,setAdicionados,setVendas)=>{
+    try {
+        console.log(formVenda, vendaId)
+        axios
+            .post('https://api-app03.vercel.app/produtos/venda/update',{
+                _id:vendaId,
+                    cliente:formVenda.cliente,
+                    data:formVenda.data,
+                    valor:formVenda.valor,
+                    parcelas:formVenda.parcelas,
+                    formapagamento:formVenda.formapagamento,
+                    produtos:formVenda.produtos,
+                    pagamentos:formVenda.pagamentos
+            })
+            .then((data)=>{
+                console.log('Venda Atualizada')
+                console.log(data)
+                setOpenModal(false);
+                setFormVenda({
+                    cliente:'',
+                    data:'',
+                    valor:'',
+                    parcelas:'',
+                    formapagamento:'',
+                    produtos:'',
+                    pagamentos:[]
+                });
+                setAdicionados([]);
+                notifyVendaAtualizada();
+                getVendas(setVendas);
+            })
+            .catch((err)=>{
+                console.log('Erro ao atualizar venda', err);
+                notifyErroAtualizarVenda();
+            })
+
+    } catch (error) {
+        
+    }
+}
+
+export {addVenda, getVendas, deleteVenda, updateStatus, updateVenda}

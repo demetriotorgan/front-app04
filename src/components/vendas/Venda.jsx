@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './Venda.css'
 import { getProdutosEstoque } from '../../utils/estoqueHandleApi';
-import { formataValor } from '../../utils/formatar';
+import { formatarDataEditar, formatarDataExibir, formataValor, voltarAoTopo } from '../../utils/formatar';
 import ModalVenda from './modalVenda/ModalVenda';
 import { notifyErroVenda, notifyVendaSalva } from '../../utils/mensagens';
 import {Bounce, ToastContainer } from 'react-toastify';
+import { getVendas } from '../../utils/vendaHandleApi';
 
 
 const Venda = () => {
@@ -25,9 +26,14 @@ const Venda = () => {
   const [openModal, setOpenModal] = useState(false);  
   const [produtosVendidos, setProdutosVendidos] = useState([]);
   const [produtosEstoque, setProdutosEstoque] = useState([]);
+  const [vendas, setVendas] = useState([]);
+  const [updateMode, setUpdateMode] = useState(false);
+  const [produtosExcluidos, setProdutosExcluidos] = useState([]);
+  const [vendaId, setVendaId] = useState('');
 
 useEffect(()=>{
   getProdutosEstoque(setListaProdutos, setProdutosEstoque);      
+  getVendas(setVendas);
 },[]);
 
 useEffect(()=>{
@@ -54,11 +60,47 @@ useEffect(()=>{
     }))
   }
 
+  const atualizarVenda = (venda)=>{
+    setUpdateMode(true);
+    setFormVenda({
+    cliente:venda.cliente,
+    data:formatarDataEditar(venda.data),
+    valor:'',
+    parcelas: venda.parcelas,
+    formapagamento:venda.formapagamento,
+    produtos:setAdicionados(venda.produtos),
+    pagamentos:venda.pagamentos
+    });
+    setVendaId(venda._id);
+    voltarAoTopo();    
+  }  
+
+  const excluirProduto = (codigo)=>{
+      setAdicionados(adicionados.filter(adicionado => adicionado.codigo !==codigo));
+      setProdutosExcluidos(...produtosExcluidos, adicionados.filter(adicionado => adicionado.codigo == codigo));
+
+  }
+
+  const limparCampos = ()=>{
+    setFormVenda({
+    cliente:'',
+    data:'',
+    valor:'',
+    parcelas:'AVISTA',
+    formapagamento:'PIX',
+    produtos:'',
+    pagamentos:[]
+    })
+    setUpdateMode(!updateMode);
+    setAdicionados([]);
+  }
+
   const submitVendas = (e)=>{
     e.preventDefault()
     setOpenModal(true);
     console.log('Enviando formVenda: ', formVenda);
-    console.log('Produtos Vendidos: ',produtosVendidos);
+    // console.log('Produtos Vendidos: ',produtosVendidos);
+    console.log('Produtos Excluidos', produtosExcluidos);
   }
 
   return (
@@ -88,6 +130,10 @@ useEffect(()=>{
    produtosVendidos={produtosVendidos}
    setListaProdutos={setListaProdutos}
    setProdutosEstoque={setProdutosEstoque}
+   produtosExcluidos={produtosExcluidos}
+   updateMode={updateMode}
+   vendaId={vendaId}   
+   setVendas={setVendas}
    />
    <div className='form-container'>
     <h2>Cadastrar Venda</h2>
@@ -171,7 +217,7 @@ useEffect(()=>{
     <tbody>      
         {adicionados.map((item, index)=>(
           <tr key={index}>
-            <td>{item.codigo}</td>
+            <td>{item.codigo} <i className="fa-regular fa-trash-can" onClick={()=>excluirProduto(item.codigo)}></i></td>
             <td>{item.descricao}</td>
             <td>{formataValor(item.pv)}</td>
           </tr>
@@ -184,9 +230,22 @@ useEffect(()=>{
     </tbody>
   </table>
     </div>
-          <button type='submit' className='button-enviar' disabled = {total ? false : true} >Finalizar</button>    
-          <button type='button' className='button-enviar'>Limpar Campos</button>
+          <button type='submit' className='button-enviar' disabled = {total ? false : true} >{updateMode ? 'Atualizar' : 'Salvar'}</button>    
+          <button type='button' className='button-enviar' onClick={()=>limparCampos()}>Limpar Campos</button>
       </form>
+   </div>
+   <div className='painel-vendas'>
+        <h2>Vendas</h2>
+        {vendas ?
+        vendas.map((venda, index)=>(
+          <div className='card-venda' key={index}>
+          <p>Cliente: <strong>{venda.cliente}</strong></p>
+          <p>Data: {formatarDataExibir(venda.data)}</p>
+          <p>Valor: {formataValor(venda.valor)}</p>
+          <button type='button' className='button-editar-venda' onClick={()=>atualizarVenda(venda)}>Editar Venda</button>
+        </div>
+        ))        
+         :''}
    </div>
    </>
   )

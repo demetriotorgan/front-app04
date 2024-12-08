@@ -1,16 +1,22 @@
 import React from 'react'
 import './ModalVenda.css'
 import { formatarData, formataValor } from '../../../utils/formatar'
-import { addVenda } from '../../../utils/vendaHandleApi';
+import { addVenda, updateVenda } from '../../../utils/vendaHandleApi';
 
-const ModalVenda = ({openModal, setOpenModal,formVenda,setFormVenda,notifyVendaSalva,notifyErroVenda,setAdicionados, produtosVendidos,setListaProdutos,setProdutosEstoque}) => {
+const ModalVenda = ({openModal, setOpenModal,formVenda,setFormVenda,notifyVendaSalva,notifyErroVenda,setAdicionados, produtosVendidos,setListaProdutos,setProdutosEstoque,produtosExcluidos,updateMode, vendaId,setVendas}) => {
     const handleClose = ()=>{
         setOpenModal(false)
     }
 
     const enviarForm = ()=>{
         console.log('Enviando Form');        
-        addVenda(formVenda,notifyVendaSalva, setFormVenda, setOpenModal,notifyErroVenda,setAdicionados,produtosVendidos,setListaProdutos,setProdutosEstoque); 
+        addVenda(formVenda,notifyVendaSalva, setFormVenda, setOpenModal,notifyErroVenda,setAdicionados,produtosVendidos,setListaProdutos,setProdutosEstoque,setVendas); 
+        
+    }
+
+    const atualizarVenda = ()=>{
+        console.log('Atualiando Venda')
+        updateVenda(formVenda, vendaId, setOpenModal, setFormVenda,setAdicionados,setVendas);
     }
   return (
     <>
@@ -44,7 +50,7 @@ const ModalVenda = ({openModal, setOpenModal,formVenda,setFormVenda,notifyVendaS
                         <h2>Valor: {formataValor(formVenda.valor)}</h2>
                     </div>                    
                     <div className='modal-button'>
-                    <button className='close-button' onClick={()=>enviarForm('')}>Enviar</button>
+                    <button className='close-button' onClick={updateMode ? ()=>atualizarVenda() : ()=>enviarForm('')}>{updateMode ? 'Atualizar' : 'Enviar'}</button>
                     <button className='close-button' onClick={handleClose}>Cancelar</button>                                        
                     </div>
             </div>

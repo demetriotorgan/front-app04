@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { notifyErroAtualizarPagamento, notifyErroPagamento, notifyPagamentoExcluido, notifyPagemntoAtualizado, notifyPagemntoSalvo } from './mensagens';
+import { notifyErroAtualizarPagamento, notifyErroPagamento, notifyPagamentoExcluido, notifyPagamentosEncontrados, notifyPagemntoAtualizado, notifyPagemntoSalvo, notifySemPagamentosRegistrados } from './mensagens';
 import { getVendas } from './vendaHandleApi';
 
 const addPagamento = (_id, formPagamento, setOpenModal, setCliente, setVendas,setFormPagamento,setValor)=>{
@@ -82,4 +82,24 @@ const updatePagamento = (vendaId, pagamentoId, formPagamento, setOpenModal, setC
             
 }
 
-export {addPagamento, excluirPagamento, updatePagamento}
+const pagamentosPorMes = (setPagamentos,mes, ano)=>{
+    try {
+        axios
+            .get(`https://api-app03.vercel.app/produtos/venda/busca?mes=${mes}&ano=${ano}`)
+            .then(({data})=>{
+                console.log('Pagamentos: ',data);
+                setPagamentos(data)
+                if(data.length == 0){
+                    // console.log('Sem pagamentos registrados')
+                    notifySemPagamentosRegistrados();
+                    setPagamentos('');
+                }else{
+                    notifyPagamentosEncontrados();
+                }
+            })
+    } catch (error) {
+        console.error('Erro ao carregar pagamentos')   
+    }
+}
+
+export {addPagamento, excluirPagamento, updatePagamento, pagamentosPorMes}
