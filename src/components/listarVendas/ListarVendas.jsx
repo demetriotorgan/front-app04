@@ -6,6 +6,7 @@ import SemPagamento from './SemPagamento/SemPagamento';
 import PagamentoModal from './PagamentoModal/PagamentoModal';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { excluirPagamento } from '../../utils/pagamentoHandleApi';
+import { getProdutosEstoque } from '../../utils/estoqueHandleApi';
 
 const ListarVendas = () => {
   const [vendas, setVendas] = useState([]);
@@ -20,7 +21,9 @@ const ListarVendas = () => {
   const [editarDataPagamento, setEditarDataPagamento]= useState('');
   const [valor, setValor] = useState('');
   const [editarTipoPagamento, setEditarTipoPagamento]= useState('');
-  const [updateMode, setUpdateMode] = useState(false);  
+  const [updateMode, setUpdateMode] = useState(false);    
+  const [listaProdutos,setListaProdutos] = useState([]);
+  const [produtosEstoque, setProdutosEstoque] = useState([]);
 
   const [formPagamento, setFormPagamento] = useState({            
     data:'',
@@ -28,7 +31,8 @@ const ListarVendas = () => {
     tipo:''
 })
 
-  useEffect(()=>{
+useEffect(()=>{
+    getProdutosEstoque(setListaProdutos, setProdutosEstoque);      
     getVendas(setVendas);
   },[])
 
@@ -69,6 +73,16 @@ const ListarVendas = () => {
     setUpdateMode(true);
     setOpenModal(true);    
   }
+
+  const extrairIds = (produtos)=>{
+    return produtos.map(produto => ({_id: produto._id}));
+  }
+
+  const excluirVenda = (venda)=>{    
+    deleteVenda(venda._id, setVendas, setCliente, setVendaPesquisada,extrairIds(venda.produtos),setListaProdutos,setProdutosEstoque);    
+    //venda._id, setVendas, setCliente, setVendaPesquisada
+  }
+
   return (
     <>
       <PagamentoModal
@@ -210,7 +224,7 @@ const ListarVendas = () => {
                 <p className='status-venda-encerrada'> <i className="fa-solid fa-hand-holding-dollar"></i>Venda Encerrada</p> :
                 <p className='status-venda-aberta'>Venda em Aberto</p>}
               </div>
-              <button className='botao-exlcuir-venda' onClick={()=>deleteVenda(venda._id, setVendas, setCliente, setVendaPesquisada)}>Excluir Venda</button>
+              <button className='botao-exlcuir-venda' onClick={()=>excluirVenda(venda)}>Excluir Venda</button>
           </div>
         ))}
       </div>

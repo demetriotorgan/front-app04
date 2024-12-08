@@ -44,7 +44,7 @@ const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,not
     }
 }
 
-const deleteVenda = (_id, setVendas, setCliente, setVendaPesquisada)=>{
+const deleteVenda = (_id, setVendas, setCliente, setVendaPesquisada,produtosExcluidos,setListaProdutos,setProdutosEstoque)=>{
     try {
         console.log(_id);
         axios
@@ -56,6 +56,7 @@ const deleteVenda = (_id, setVendas, setCliente, setVendaPesquisada)=>{
                 setCliente('');
                 setVendaPesquisada('');
                 notifyVendaExcluida();
+                devolucaoProdutosEstoque(produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque)
             })
     } catch (error) {
         console.error('Erro ao excluir venda');
@@ -129,6 +130,7 @@ const updateVenda = (formVenda, vendaId, setOpenModal, setFormVenda,setAdicionad
 
 const devolucaoProdutosEstoque = async(produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque)=>{
 try {
+    console.log('Produtos a devolver: ',produtosExcluidos);
     const response = await axios
     .put('https://api-app03.vercel.app/produtos/venda/devolucao',
         {
