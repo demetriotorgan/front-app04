@@ -10,13 +10,13 @@ const ModalVenda = ({openModal, setOpenModal,formVenda,setFormVenda,notifyVendaS
 
     const enviarForm = ()=>{
         console.log('Enviando Form');        
-        addVenda(formVenda,notifyVendaSalva, setFormVenda, setOpenModal,notifyErroVenda,setAdicionados,produtosVendidos,setListaProdutos,setProdutosEstoque,setVendas); 
-        
+        addVenda(formVenda,notifyVendaSalva, setFormVenda, setOpenModal,notifyErroVenda,setAdicionados,produtosVendidos,setListaProdutos,setProdutosEstoque,setVendas);         
     }
 
     const atualizarVenda = ()=>{
         console.log('Atualiando Venda')
-        updateVenda(formVenda, vendaId, setOpenModal, setFormVenda,setAdicionados,setVendas);
+        updateVenda(formVenda, vendaId, setOpenModal, setFormVenda,setAdicionados,produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque,produtosVendidos);
+        // console.log(produtosExcluidos);
     }
   return (
     <>

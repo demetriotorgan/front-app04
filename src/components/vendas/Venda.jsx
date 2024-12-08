@@ -75,10 +75,9 @@ useEffect(()=>{
     voltarAoTopo();    
   }  
 
-  const excluirProduto = (codigo)=>{
+  const excluirProduto = (codigo,id)=>{
       setAdicionados(adicionados.filter(adicionado => adicionado.codigo !==codigo));
-      setProdutosExcluidos(...produtosExcluidos, adicionados.filter(adicionado => adicionado.codigo == codigo));
-
+      setProdutosExcluidos([...produtosExcluidos, {_id:id}]);
   }
 
   const limparCampos = ()=>{
@@ -217,7 +216,7 @@ useEffect(()=>{
     <tbody>      
         {adicionados.map((item, index)=>(
           <tr key={index}>
-            <td>{item.codigo} <i className="fa-regular fa-trash-can" onClick={()=>excluirProduto(item.codigo)}></i></td>
+            <td>{item.codigo} <i className="fa-regular fa-trash-can" onClick={()=>excluirProduto(item.codigo, item._id)}></i></td>
             <td>{item.descricao}</td>
             <td>{formataValor(item.pv)}</td>
           </tr>

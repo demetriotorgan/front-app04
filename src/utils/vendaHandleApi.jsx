@@ -64,6 +64,7 @@ const deleteVenda = (_id, setVendas, setCliente, setVendaPesquisada)=>{
 
 const updateStatus = async (produtosVendidos,setListaProdutos,setProdutosEstoque)=>{
     try {
+        console.log('Produtos Vendidos', produtosVendidos)
         const response = await axios
             .put('https://api-app03.vercel.app/produtos/venda',
                 {
@@ -79,7 +80,7 @@ const updateStatus = async (produtosVendidos,setListaProdutos,setProdutosEstoque
     }
 }
 
-const updateVenda = (formVenda, vendaId, setOpenModal, setFormVenda,setAdicionados,setVendas)=>{
+const updateVenda = (formVenda, vendaId, setOpenModal, setFormVenda,setAdicionados,produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque,produtosVendidos)=>{
     try {
         console.log(formVenda, vendaId)
         axios
@@ -107,8 +108,14 @@ const updateVenda = (formVenda, vendaId, setOpenModal, setFormVenda,setAdicionad
                     pagamentos:[]
                 });
                 setAdicionados([]);
-                notifyVendaAtualizada();
+                if(produtosExcluidos.length !==0){
+                    devolucaoProdutosEstoque(produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque)
+                }                
                 getVendas(setVendas);
+                if(produtosVendidos.length !==0){
+                updateStatus(produtosVendidos,setListaProdutos,setProdutosEstoque)
+                }
+                notifyVendaAtualizada();                
             })
             .catch((err)=>{
                 console.log('Erro ao atualizar venda', err);
@@ -118,6 +125,23 @@ const updateVenda = (formVenda, vendaId, setOpenModal, setFormVenda,setAdicionad
     } catch (error) {
         
     }
+}
+
+const devolucaoProdutosEstoque = async(produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque)=>{
+try {
+    const response = await axios
+    .put('https://api-app03.vercel.app/produtos/venda/devolucao',
+        {
+            produtos: produtosExcluidos
+        })
+        console.log('Proutos devolvidos ao estoque')
+        console.log(response.data)
+        getVendas(setVendas);
+        getProdutosEstoque(setListaProdutos,setProdutosEstoque);
+        notifyStatusAtualizado();
+} catch (error) {
+    console.error(error);
+}
 }
 
 export {addVenda, getVendas, deleteVenda, updateStatus, updateVenda}
