@@ -12,8 +12,8 @@ const Venda = () => {
     cliente:'',
     data:'',
     valor:'',
-    parcelas:'',
-    formapagamento:'',
+    parcelas:'AVISTA',
+    formapagamento:'PIX',
     produtos:'',
     pagamentos:[]
   });
@@ -114,7 +114,7 @@ useEffect(()=>{
           value={formVenda.parcelas}
           onChange={handleFormVenda}          
           >
-            <option value="vazio"></option>
+            <option value="AVISTA">A VISTA</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -128,10 +128,9 @@ useEffect(()=>{
           value={formVenda.formapagamento}
           onChange={handleFormVenda}
           >
-            <option value="vazio"></option>
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Pix">Pix</option>
-            <option value="Cartão">Cartão</option>                
+            <option value="PIX">PIX</option>            
+            <option value="DINHEIRO">DINHEIRO</option>            
+            <option value="CARTÃO">CARTÃO</option>                
           </select>
 
           <label>Produto</label>
@@ -185,7 +184,7 @@ useEffect(()=>{
     </tbody>
   </table>
     </div>
-          <button type='submit' className='button-enviar'>Finalizar</button>    
+          <button type='submit' className='button-enviar' disabled = {total ? false : true} >Finalizar</button>    
           <button type='button' className='button-enviar'>Limpar Campos</button>
       </form>
    </div>
