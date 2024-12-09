@@ -231,4 +231,65 @@ const notifyErroVenda = () => toast.error('Não foi possível cadastrar nova ven
                     transition: Bounce,
                 });
 
-export{notifySucesso, notifyErro, deleteSucesso, notifyErroDelete, notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyVendaSalva, notifyErroVenda, notifyVendaExcluida, notifyPagemntoSalvo, notifyErroPagamento, notifyPagamentoExcluido,notifyPagemntoAtualizado, notifyErroAtualizarPagamento, notifyStatusAtualizado, notifySemPagamentosRegistrados, notifyPagamentosEncontrados, notifyVendaAtualizada, notifyErroAtualizarVenda}
+                const notifyErroCarregarProdutos = () => toast.error('Erro ao carregar produtos do estoque', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+
+                const notifyCondiconalSalvo = () => toast.success('Condiconal salvo com sucesso', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                    });
+
+                    const notifyStatusCondicional = ()=> toast.info('Status dos produtos alterado para Condiconal', {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                    });
+
+                    const notifyCondicionalExcluido = ()=>toast.warn('Condicional excluido com sucesso', {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                        });
+        
+                        const notifyCondicionalAtualizado = () => toast.success('Condicional atualizado', {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            transition: Bounce,
+                            });
+                        
+
+export{notifySucesso, notifyErro, deleteSucesso, notifyErroDelete, notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyVendaSalva, notifyErroVenda, notifyVendaExcluida, notifyPagemntoSalvo, notifyErroPagamento, notifyPagamentoExcluido,notifyPagemntoAtualizado, notifyErroAtualizarPagamento, notifyStatusAtualizado, notifySemPagamentosRegistrados, notifyPagamentosEncontrados, notifyVendaAtualizada, notifyErroAtualizarVenda, notifyErroCarregarProdutos, notifyCondiconalSalvo, notifyStatusCondicional, notifyCondicionalExcluido, notifyCondicionalAtualizado}

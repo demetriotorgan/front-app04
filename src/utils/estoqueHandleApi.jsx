@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { notifyAtualizarProduto, notifyAtualizarProdutoErro } from './mensagens'
+import { notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyErroCarregarProdutos, notifyErroDelete } from './mensagens'
 
 const getProdutos = async (setProdutos)=>{
     axios
@@ -7,6 +7,10 @@ const getProdutos = async (setProdutos)=>{
         .then(({data})=>{
             console.log('data-->', data)
             setProdutos(data);                                    
+        })
+        .catch((err)=>{
+            console.log(err)
+            notifyErroCarregarProdutos();
         })
 }
 
@@ -22,6 +26,7 @@ const getProdutosEstoque = async (setProdutos,setProdutosEstoque)=>{
             console.log('Produto em Estoque:', produtosEmEstoque);             
     } catch (error) {
         console.error('Erro ao carregar produtos do estoque');
+        notifyErroCarregarProdutos();
     }
    
 }
@@ -39,8 +44,6 @@ const addForm = async(formData,notifySucesso,notifyErro, notifyErroDelete)=>{
         console.error('Erro ao cadastrar produto', error)
         if(error.status === 500){
             notifyErro()
-        }else{
-            notifyErroDelete()
         }        
     }
 }
@@ -57,6 +60,7 @@ const deleteProdutoPesquisa = (_id, setProdutoPesquisado, setCodigoProduto, dele
             })
     } catch (error) {
         console.error('Erro ao deletar produto')
+        notifyErroDelete();
     }
 }
 
@@ -71,6 +75,7 @@ const deleteProdutoEstoque = (_id, setProdutos,deleteSucesso)=>{
             })
     } catch (error) {
         console.error('Erro ao deletar produto')
+        notifyErroDelete();
     }
 }
 
