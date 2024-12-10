@@ -131,7 +131,7 @@ const Condicional = () => {
         console.log('Atualizar Condicional');
         console.log('Produtos Excluidos', produtosExcluidos);
         console.log('Produtos para Condicional ->', produtosCondicional);
-        updateCondicional(condicionalId, formCondicional, produtosExcluidos, setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados, setProdutosExcluidos,setListaCondicionais, produtosCondicional,setProdutosCondicional, setModeDevolucao);
+        updateCondicional(condicionalId, formCondicional, produtosExcluidos, setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados, setProdutosExcluidos,setListaCondicionais, produtosCondicional,setProdutosCondicional, setModeDevolucao,produtosExcluidos);
       }
     }else{
       console.log('Produto para Condiconal: ',produtosCondicional);
@@ -170,6 +170,8 @@ const Condicional = () => {
       condicionalId={condicionalId}
       setFormCondicional={setFormCondicional}
       setProdutosVendido={setProdutosVendido}
+      produtosExcluidos={produtosExcluidos}
+      setProdutosCondicional={setProdutosCondicional}
       
   />
 
@@ -228,7 +230,7 @@ const Condicional = () => {
           <tr key={index}>
           <td>{item.codigo} {modeDevolucao ? <i className="fa-solid fa-reply-all" onClick={()=>devolverProduto(item)}></i> :<i className="fa-regular fa-trash-can" onClick={()=>excluirProduto(item.codigo, item._id)}></i>}</td>
           <td>{item.descricao}</td>
-          <td>{formataValor(item.pv)} <i className="fa-solid fa-sack-dollar" onClick={()=>venderProduto(item)}></i></td>          
+          <td>{formataValor(item.pv)} {modeDevolucao ? <i className="fa-solid fa-sack-dollar" onClick={()=>venderProduto(item)}></i> :''} </td>          
         </tr>
         ))}        
     </tbody>

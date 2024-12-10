@@ -138,7 +138,7 @@ const updateCondicional = (condicionalId, formCondicional,produtosExcluidos,setL
     }
 }
 
-const addVendaCondicional = async(formVenda,vendidosId,setListaProdutos,setProdutosEstoque,setOpenModalVenda,setAdicionados,setListaCondicionais,produtosVendido, formCondicional,condicionalId,setFormCondicional,setProdutosVendido)=>{
+const addVendaCondicional = async(formVenda,vendidosId,setListaProdutos,setProdutosEstoque,setOpenModalVenda,setAdicionados,setListaCondicionais,produtosVendido, formCondicional,condicionalId,setFormCondicional,setProdutosVendido,produtosExcluidos,setProdutosCondicional)=>{
     try {
         const response = await axios.post('https://api-app03.vercel.app/produtos/venda/save',{
             cliente:formVenda.cliente,
@@ -158,6 +158,9 @@ const addVendaCondicional = async(formVenda,vendidosId,setListaProdutos,setProdu
         updateStatus(produtosVendido,setListaProdutos,setProdutosEstoque)
         updateCondicionalVendido(condicionalId,formCondicional,setFormCondicional,setListaCondicionais)
         setProdutosVendido('');
+        if(produtosExcluidos.length !==0){
+            devolucaoCondicional(produtosExcluidos,setListaProdutos, setProdutosEstoque,setListaCondicionais)
+        }
     } catch (error) {
         console.log('Erro ao salvar Venda', error);
         notifyErroVenda();
