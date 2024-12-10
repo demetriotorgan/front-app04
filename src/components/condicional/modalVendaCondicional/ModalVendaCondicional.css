@@ -1,0 +1,12 @@
+select{
+ width: 100%;
+ padding: 10px;
+ margin-top: 5px; 
+ border: 1px solid var(--text-color);
+ border-radius: 10px;
+}
+
+.dados-venda label{
+    color: #000;
+    margin: 5px;
+}

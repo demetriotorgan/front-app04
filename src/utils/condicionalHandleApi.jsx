@@ -1,6 +1,7 @@
 import axios from 'axios'
-import { notifyCondicionalAtualizado, notifyCondicionalExcluido, notifyCondiconalSalvo, notifyStatusCondicional } from './mensagens';
+import { notifyCondicionalAtualizado, notifyCondicionalExcluido, notifyCondiconalSalvo, notifyErroVenda, notifyStatusCondicional, notifyVendaSalva } from './mensagens';
 import { getProdutosEstoque } from './estoqueHandleApi';
+import { updateStatus } from './vendaHandleApi';
 
 const getCondicionais = async(setListaCondicionais)=>{
     try {
@@ -136,4 +137,56 @@ const updateCondicional = (condicionalId, formCondicional,produtosExcluidos,setL
         console.log(error);
     }
 }
-export {saveCondicional, entradaCondiconal, getCondicionais, deletarCondicional, devolucaoCondicional, updateCondicional}
+
+const addVendaCondicional = async(formVenda,vendidosId,setListaProdutos,setProdutosEstoque,setOpenModalVenda,setAdicionados,setListaCondicionais,produtosVendido, formCondicional,condicionalId,setFormCondicional,setProdutosVendido)=>{
+    try {
+        const response = await axios.post('https://api-app03.vercel.app/produtos/venda/save',{
+            cliente:formVenda.cliente,
+            data:formVenda.data,
+            valor:formVenda.valor,
+            parcelas:formVenda.parcelas,
+            formapagamento:formVenda.formapagamento,
+            produtos:formVenda.produtos,
+            pagamentos:formVenda.pagamentos,
+        })
+        console.log('Venda concluida com sucesso', response.data);
+        notifyVendaSalva();
+        updateStatus(vendidosId,setListaProdutos,setProdutosEstoque);
+        setOpenModalVenda(false);
+        setAdicionados([]); 
+        getCondicionais(setListaCondicionais);
+        updateStatus(produtosVendido,setListaProdutos,setProdutosEstoque)
+        updateCondicionalVendido(condicionalId,formCondicional,setFormCondicional,setListaCondicionais)
+        setProdutosVendido('');
+    } catch (error) {
+        console.log('Erro ao salvar Venda', error);
+        notifyErroVenda();
+    }
+}
+
+const updateCondicionalVendido = (condicionalId,formCondicional,setFormCondicional,setListaCondicionais)=>{
+    try {
+        console.log('Condicional ID -> ', condicionalId);
+        console.log('Form Condicional ->', formCondicional);        
+        axios
+            .put('https://api-app03.vercel.app/produtos/venda/condicional/update',
+                {
+                    _id: condicionalId,
+                    cliente: formCondicional.cliente,
+                    data: formCondicional.data,
+                    produtos: formCondicional.produtos
+                })
+                .then((data)=>{
+                console.log('Condicional Atualizado ->') 
+                setFormCondicional({
+                        cliente:'',
+                        data:'',
+                        produtos:''
+                    })                       
+                getCondicionais(setListaCondicionais);
+                })                
+    } catch (error) {
+        console.log('Erro ao atualizar condicional', error);
+    }
+}
+export {saveCondicional, entradaCondiconal, getCondicionais, deletarCondicional, devolucaoCondicional, updateCondicional,addVendaCondicional, updateCondicionalVendido}

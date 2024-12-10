@@ -129,3 +129,43 @@
     padding: 5px;
     border-radius: 10px;
 }
+
+.painel-vendidos{
+    margin: 10px 25px;
+    border: 1px solid var(--color-1);
+    border-radius: 10px;       
+}
+
+.painel-vendidos h2{
+    text-align: center;
+    margin: 10px;
+    color: var(--color-1);   
+}
+
+.card-vendido{
+    background-color: var(--color-1);
+    margin: 10px;
+    padding: 5px;
+    color: var(--text-color);
+    border-radius: 10px;
+}
+
+.button-cancelar{
+    width: 70%;
+    margin: 0 auto;
+    padding: 12px;        
+    background-color: var(--color-3);
+    color:var(--color-1);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;  
+    margin-top: 10px;    
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;      
+}
+
+.cancelar-vendas{
+    text-align: center;
+    margin: 15px;
+}
