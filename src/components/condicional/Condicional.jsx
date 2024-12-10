@@ -16,7 +16,7 @@ const Condicional = () => {
   const [produtoVendido, setProdutoVendido] = useState([]);
   const [listaCondicionais, setListaCondicionais] = useState([]);
   const [modeDevolucao, setModeDevolucao] = useState(false);
-  const [condicionalId, setCondicionalId] = useState('');
+  const [condicionalId, setCondicionalId] = useState(''); 
 
   const [formCondicional, setFormCondicional] = useState({
     cliente:'',
@@ -195,11 +195,16 @@ const Condicional = () => {
           <p>Data: {formatarDataExibir(condicional.data)} </p>
           <p>Produtos:</p>
           <ul className='lista-condicional'>
-            {condicional.produtos.map((produto, index)=>(
-              <li key={index}>{produto.codigo}</li>
-            ))}
+            {condicional.produtos.length == 0 ? 
+            <div className='condiconal-encerrado'>
+                <h3>DEVOLVIDO</h3>
+            </div>
+            :
+            condicional.produtos.map((produto, index)=>(
+              <li key={index}>{produto.codigo}</li>              
+            ))}            
           </ul>
-          <button className='button-devolucao-condicional' onClick={()=>devolucaoCondicional(condicional)}>Devolução</button>
+          <button className='button-devolucao-condicional' onClick={()=>devolucaoCondicional(condicional)} disabled={condicional.produtos.length ==0 ? true : false}>Devolução</button>
           <button className='button-excluir-condicional' onClick={()=>deletarCondicional(condicional._id,condicional.produtos, setListaCondicionais,setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados)}>Excluir</button>
       </div>
       ))}
