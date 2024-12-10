@@ -104,7 +104,7 @@ try {
 const updateCondicional = (condicionalId, formCondicional,produtosExcluidos,setListaProdutos, setProdutosEstoque,setFormCondicional, setAdicionados, setProdutosExcluidos,setListaCondicionais, produtosCondicional,setProdutosCondicional,setModeDevolucao)=>{
     try {
         console.log('Condicional ID -> ', condicionalId);
-        console.log('Form Condicional ->', formCondicional);
+        console.log('Form Condicional ->', formCondicional);        
         axios
             .put('https://api-app03.vercel.app/produtos/venda/condicional/update',
                 {
@@ -121,7 +121,7 @@ const updateCondicional = (condicionalId, formCondicional,produtosExcluidos,setL
                         produtos:''
                     });
                     setAdicionados([]);
-                    setProdutosExcluidos([]);
+                    setProdutosExcluidos([]);                    
                     if(produtosExcluidos.length !==0){
                         devolucaoCondicional(produtosExcluidos, setListaProdutos, setProdutosEstoque,setListaCondicionais);
                     }
@@ -129,7 +129,7 @@ const updateCondicional = (condicionalId, formCondicional,produtosExcluidos,setL
                         entradaCondiconal(produtosCondicional,setListaProdutos, setProdutosEstoque,setListaCondicionais,setListaCondicionais,setProdutosCondicional)
                     }
                     getCondicionais(setListaCondicionais);
-                    setModeDevolucao(false);
+                    setModeDevolucao(false);                    
                     notifyCondicionalAtualizado();
                 })
     } catch (error) {

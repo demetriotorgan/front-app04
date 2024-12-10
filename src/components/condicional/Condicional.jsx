@@ -11,6 +11,7 @@ const Condicional = () => {
   const [produto, setProduto] = useState('');
   const [adicionados, setAdicionados] = useState([]);
   const [produtosCondicional, setProdutosCondicional] = useState([]);
+  const [produtosDevolvidos, setProdutosDevolvidos] = useState('');
   const [produtosExcluidos, setProdutosExcluidos] = useState([]);
   const [produtoVendido, setProdutoVendido] = useState([]);
   const [listaCondicionais, setListaCondicionais] = useState([]);
@@ -51,13 +52,11 @@ const Condicional = () => {
 
   const excluirProduto = (codigo, id)=>{
     setAdicionados(adicionados.filter(adicionado => adicionado.codigo !== codigo));
-    setProdutosCondicional(produtosCondicional.filter(adicionado => adicionado._id !==id));    
+    setProdutosCondicional(produtosCondicional.filter(adicionado => adicionado._id !==id));        
   }
 
-  const venderProduto = (codigo, item)=>{
-    setAdicionados(adicionados.filter(adicionado => adicionado.codigo !== codigo));
-    setProdutosCondicional(produtosCondicional.filter(adicionado => adicionado._id !==item._id));
-    setProdutoVendido([...produtoVendido,item])
+  const venderProduto = ()=>{
+    
   }
 
   const devolucaoCondicional = (condicional)=>{
@@ -74,17 +73,20 @@ const Condicional = () => {
   const devolverProduto = (item)=>{
     setProdutosExcluidos([...produtosExcluidos, {_id:item._id}]);
     setAdicionados(adicionados.filter(adicionado => adicionado.codigo !== item.codigo));    
+    setProdutosDevolvidos([...produtosDevolvidos, item]);
+    setProdutosCondicional(adicionados.filter(adicionado => adicionado.codigo !== item.codigo));
   }
 
   const submitCondicional = (e)=>{
     e.preventDefault();
     console.log('Enviando Condiconal: ',formCondicional);    
     // console.log('Produtos Vendidos: ', produtoVendido);
+    setProdutosDevolvidos('');
     if(modeDevolucao){
       console.log('Atualizar Condicional');
       console.log('Produtos Excluidos', produtosExcluidos);
       console.log('Produtos para Condicional ->', produtosCondicional);
-      updateCondicional(condicionalId, formCondicional, produtosExcluidos, setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados, setProdutosExcluidos,setListaCondicionais, produtosCondicional,setProdutosCondicional, setModeDevolucao);
+      updateCondicional(condicionalId, formCondicional, produtosExcluidos, setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados, setProdutosExcluidos,setListaCondicionais, produtosCondicional,setProdutosCondicional, setModeDevolucao, setProdutoVendido, setProdutosDevolvidos);
     }else{
       console.log('Produto para Condiconal: ',produtosCondicional);
       saveCondicional(formCondicional, setFormCondicional, setAdicionados, produtosCondicional,setListaProdutos, setProdutosEstoque, setListaCondicionais, setProdutosCondicional);
@@ -153,8 +155,8 @@ const Condicional = () => {
     <thead>
       <tr>
         <th>Codigo</th>
-        <th>Descrição</th>
-        <th>Valor</th>        
+        <th>Desc</th>
+        <th>Valor</th>                
       </tr>
     </thead>
     <tbody className='lista-condicional'>      
@@ -162,17 +164,31 @@ const Condicional = () => {
           <tr key={index}>
           <td>{item.codigo} {modeDevolucao ? <i className="fa-solid fa-reply-all" onClick={()=>devolverProduto(item)}></i> :<i className="fa-regular fa-trash-can" onClick={()=>excluirProduto(item.codigo, item._id)}></i>}</td>
           <td>{item.descricao}</td>
-          <td>{formataValor(item.pv)} <i className="fa-solid fa-sack-dollar" onClick={()=>venderProduto(item.codigo, item)}></i></td>
+          <td>{formataValor(item.pv)} <i className="fa-solid fa-sack-dollar" onClick={()=>venderProduto(item.codigo, item)}></i></td>          
         </tr>
         ))}        
     </tbody>
   </table>
-  <button type='submit' className='button-salvar-condicional' disabled = {modeDevolucao ? false : (adicionados.length === 0 ? true : false)}>{modeDevolucao ? 'Atualizar' : 'Salvar'}</button>
-        </form>
+  <button type='submit' className='button-salvar-condicional' disabled = {modeDevolucao ? false : (adicionados.length === 0 ? true : false)}>{modeDevolucao ? 'Atualizar Condiconal' : 'Salvar Condicional'}</button>
+        </form>    
     </div>
+
+    {produtosDevolvidos ?
+    <div className='painel-devolucao'>
+        <h2> <i className="fa-solid fa-reply-all"></i> Devolvendo Produtos</h2>
+        {produtosDevolvidos.map((produto, index)=>(
+            <div className='card-devolucao' key={index}>
+                <p>Código: <strong>{produto.codigo}</strong> </p>
+                <p>Descrição: {produto.descricao}</p>
+                <p>Valor: {formataValor(produto.pv)}</p>
+            </div>
+        ))}                
+    </div>
+    : ''}
+
     {listaCondicionais ? 
     <div className='painel-condicionais'>
-      <h2>Todos os Condicionais</h2>
+      <h2><i className="fa-solid fa-bag-shopping"></i> Todos os Condicionais</h2>
       {listaCondicionais.map((condicional, index)=>(
           <div className='card-condicional' key={index}>
           <p>Cliente: <strong>{condicional.cliente}</strong></p>
