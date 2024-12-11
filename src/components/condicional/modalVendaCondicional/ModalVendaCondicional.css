@@ -2,11 +2,24 @@ select{
  width: 100%;
  padding: 10px;
  margin-top: 5px; 
- border: 1px solid var(--text-color);
+ border: 1px solid var(--color-1);
  border-radius: 10px;
 }
 
 .dados-venda label{
-    color: #000;
+    color:var(--color-1);
     margin: 5px;
+}
+
+.dados-venda input{
+    border: 1px solid var(--color-1);
+}
+
+.valor-venda{
+    color: var(--color-1);
+}
+
+.styled-table th{
+    background-color: var(--color-1);
+    
 }

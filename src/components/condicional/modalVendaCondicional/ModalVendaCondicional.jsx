@@ -93,7 +93,7 @@ const ModalVendaCondicional = ({openModalVenda, setOpenModalVenda,formVenda,setF
                     ))}                        
                     </tbody>                                        
                 </table>
-                <h2 className='valor-venda'>Valor: {formataValor(formVenda.valor)}</h2>                
+                <h2 className='valor-venda'><i className="fa-solid fa-cash-register"></i> {formataValor(formVenda.valor)}</h2>                
                     </div>   
                     <div className='modal-button'>
                     <button className='close-button' type='submit'>Enviar</button>
