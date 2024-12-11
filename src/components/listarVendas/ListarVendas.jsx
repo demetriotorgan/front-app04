@@ -188,8 +188,9 @@ useEffect(()=>{
           <div className='inserir-pagamento'>
                   <SemPagamento data={vendaPesquisada.data} />
                   <button className='botao-adicionar-pagamento' onClick={()=>cadastrarPagamento(vendaPesquisada)}>Adicionar Pagamento</button> 
-              </div>
+          </div>
           }
+
           {vendaPesquisada.pagamentos.length ?          
           <div className='total-pagamentos'>
              <h3>Valor Pago:</h3>
@@ -215,11 +216,29 @@ useEffect(()=>{
           <div className='card-venda' key={index}>
               <h4>Cliente: {venda.cliente}</h4>
               <p>Data: {formatarDataExibir(venda.data)}</p>
-              <p>Valor: {formataValor(venda.valor)}</p>
+              <p className='valor-venda'>Valor:{formataValor(venda.valor)}</p>
               <p>Parcelas: {venda.parcelas}</p>
               <p>Pagamentos Realizados: {venda.pagamentos.length}</p>
-              <p>Total Pago: {formataValor(totalPagamentos(venda.pagamentos))}</p>
+              <p className='total-pago-venda'>Total Pago: {formataValor(totalPagamentos(venda.pagamentos))}</p>
               <div>
+    <table className="styled-table">
+    <thead>
+      <tr>
+        <th>Codigo</th>
+        <th>Descrição</th>
+        <th>Valor</th>                
+      </tr>
+    </thead>
+    <tbody className='lista-condicional'>      
+        {venda.produtos.map((item, index)=>(
+          <tr key={index}>
+          <td>{item.codigo} </td>
+          <td>{item.descricao}</td>
+          <td>{formataValor(item.pv)}</td>          
+        </tr>
+        ))}        
+    </tbody>
+  </table>
                 {totalPagamentos(venda.pagamentos) >= venda.valor ? 
                 <p className='status-venda-encerrada'> <i className="fa-solid fa-hand-holding-dollar"></i>Venda Encerrada</p> :
                 <p className='status-venda-aberta'>Venda em Aberto</p>}
