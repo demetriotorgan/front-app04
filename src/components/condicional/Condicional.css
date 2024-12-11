@@ -12,6 +12,20 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.button-limpar-condicional{
+    width: 100%;
+    padding: 12px;        
+    background-color: var(--color-2);
+    color:#fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;  
+    margin-top: 15px;    
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 .lista-condicional{
     color: var(--color-1);
 }

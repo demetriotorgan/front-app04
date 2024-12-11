@@ -112,6 +112,7 @@ const Condicional = () => {
     produtos:''
     });
     setModeDevolucao(false);
+    getProdutosEstoque(setListaProdutos, setProdutosEstoque);
   }
  
   const submitCondicional = (e)=>{
@@ -237,8 +238,9 @@ const Condicional = () => {
         ))}        
     </tbody>
   </table>
-  <button type='submit' className='button-salvar-condicional' disabled = {modeDevolucao ? false : (adicionados.length === 0 ? true : false)}>{modeDevolucao ? 'Atualizar Condiconal' : 'Salvar Condicional'}</button>
-        </form>    
+      <button type='submit' className='button-salvar-condicional' disabled = {modeDevolucao ? false : (adicionados.length === 0 ? true : false)}><i className="fa-solid fa-briefcase"></i>{modeDevolucao ? ' Atualizar Condiconal' : ' Salvar Condicional'}</button>
+      <button type='button' className='button-limpar-condicional' onClick={()=>cancelarCondicional()}><i className="fa-solid fa-ban"></i> Cancelar Condicional</button>
+    </form>    
     </div>
 
     {produtosDevolvidos ?
@@ -291,8 +293,8 @@ const Condicional = () => {
               <li key={index}>{produto.codigo}</li>              
             ))}            
           </ul>
-          <button className='button-devolucao-condicional' onClick={()=>devolucaoCondicional(condicional)} disabled={condicional.produtos.length ==0 ? true : false}>Devolução</button>
-          <button className='button-excluir-condicional' onClick={()=>deletarCondicional(condicional._id,condicional.produtos, setListaCondicionais,setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados)}>Excluir</button>
+          <button className='button-devolucao-condicional' onClick={()=>devolucaoCondicional(condicional)} disabled={condicional.produtos.length ==0 ? true : false}><i className="fa-solid fa-rotate-left"></i> Devolução</button>
+          <button className='button-excluir-condicional' onClick={()=>deletarCondicional(condicional._id,condicional.produtos, setListaCondicionais,setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados)}><i className="fa-regular fa-trash-can"></i> Excluir</button>
       </div>
       ))}
     </div>
