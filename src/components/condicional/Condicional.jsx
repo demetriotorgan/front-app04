@@ -60,11 +60,13 @@ const Condicional = () => {
     setAdicionados([...adicionados, item]);
     setProdutosCondicional([...produtosCondicional, {_id:item._id}]);
     setProduto('');
+    setProdutosEstoque(produtosEstoque.filter(produto => produto.codigo !== item.codigo));
   }
 
-  const excluirProduto = (codigo, id)=>{
-    setAdicionados(adicionados.filter(adicionado => adicionado.codigo !== codigo));
-    setProdutosCondicional(produtosCondicional.filter(adicionado => adicionado._id !==id));        
+  const excluirProduto = (item)=>{
+    setAdicionados(adicionados.filter(adicionado => adicionado.codigo !== item.codigo));
+    setProdutosCondicional(produtosCondicional.filter(adicionado => adicionado._id !== item._id));        
+    setProdutosEstoque([...produtosEstoque, item]);
   }
 
   const venderProduto = (item)=>{
@@ -228,7 +230,7 @@ const Condicional = () => {
     <tbody className='lista-condicional'>      
         {adicionados.map((item, index)=>(
           <tr key={index}>
-          <td>{item.codigo} {modeDevolucao ? <i className="fa-solid fa-reply-all" onClick={()=>devolverProduto(item)}></i> :<i className="fa-regular fa-trash-can" onClick={()=>excluirProduto(item.codigo, item._id)}></i>}</td>
+          <td>{item.codigo} {modeDevolucao ? <i className="fa-solid fa-reply-all" onClick={()=>devolverProduto(item)}></i> :<i className="fa-regular fa-trash-can" onClick={()=>excluirProduto(item)}></i>}</td>
           <td>{item.descricao}</td>
           <td>{formataValor(item.pv)} {modeDevolucao ? <i className="fa-solid fa-sack-dollar" onClick={()=>venderProduto(item)}></i> :''} </td>          
         </tr>
