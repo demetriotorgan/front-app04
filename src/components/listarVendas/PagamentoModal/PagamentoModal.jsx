@@ -25,7 +25,7 @@ const PagamentoModal = ({openModal, setOpenModal, dadosVenda, setCliente, setVen
 
     const enviarPagamento = (dadosVenda)=>{
         console.log(formPagamento);
-        addPagamento(dadosVenda._id, formPagamento, setOpenModal, setCliente, setVendas,setFormPagamento,setValor)
+        addPagamento(dadosVenda._id, formPagamento, setOpenModal, setCliente, setVendas,setFormPagamento,setValor, dadosVenda)
     }
     
     const handleClose = ()=>{
@@ -77,7 +77,7 @@ const PagamentoModal = ({openModal, setOpenModal, dadosVenda, setCliente, setVen
                     />
 
                     <div className='modal-button'>
-                        <button className='close-button' onClick={updateMode ? ()=>updatePagamento(editarVenda._id, editarPagamentoId, formPagamento, setOpenModal, setCliente,setVendas,setFormPagamento,setValor,setUpdateMode) : ()=>enviarPagamento(dadosVenda)}>{updateMode ? 'Atualizar': 'Enviar'}</button>
+                        <button className='close-button' onClick={updateMode ? ()=>updatePagamento(editarVenda._id, editarPagamentoId, formPagamento, setOpenModal, setCliente,setVendas,setFormPagamento,setValor,setUpdateMode,dadosVenda) : ()=>enviarPagamento(dadosVenda)}>{updateMode ? 'Atualizar': 'Enviar'}</button>
                         <button className='close-button' onClick={handleClose}>Cancelar</button>                                        
                     </div>
                 </div>                

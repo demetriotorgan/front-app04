@@ -60,7 +60,7 @@ useEffect(()=>{
       data: editarDataPagamento,
       valor: valor,
       tipo: editarTipoPagamento
-    })
+    });    
   },[updateMode]);
 
   const editarPagamento = (vendaAlterar, tipoPagamento, pagamentoId, valorPagamento, dataPagamento)=>{        
@@ -69,7 +69,7 @@ useEffect(()=>{
     setEditarDataPagamento(formatarDataEditar(dataPagamento));
     setValor(valorPagamento)
     setEditarTipoPagamento(tipoPagamento)
-
+    setDadosVenda(vendaAlterar);
     setUpdateMode(true);
     setOpenModal(true);    
   }
@@ -100,7 +100,7 @@ useEffect(()=>{
       valor={valor}
       setValor={setValor}
       setEditarDataPagamento={setEditarDataPagamento}
-      setEditarTipoPagamento={setEditarTipoPagamento}
+      setEditarTipoPagamento={setEditarTipoPagamento}      
       />
       
       <ToastContainer

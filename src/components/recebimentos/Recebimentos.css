@@ -67,3 +67,51 @@
     margin-top: 10px;
     margin-bottom: 5px;
 }
+
+.lista-recebimentos{
+    border: 1px solid var(--color-1);
+    margin: 15px 25px;
+    border-radius: 10px;
+}
+
+.lista-recebimentos h2{
+    padding: 10px;
+    color: var(--color-1);
+}
+
+.card-recebimento{
+    border: 1px solid var(--color-1);
+    background-color: var(--color-2);
+    margin: 10px 15px;
+    border-radius: 10px;
+    padding: 10px 10px;
+}
+
+.botao-excluir-pagamento{
+    width: 100%;
+    padding: 12px;        
+    background-color: red;
+    color:#fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;  
+    margin-top: 10px;    
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.pesquisar-pagamento-cliente{
+    border: 1px solid var(--color-1);    
+    margin: 20px 25px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.pesquisar-pagamento-cliente label{
+    color: var(--color-1);
+}
+
+.valor-pago{
+    text-align: center;
+}

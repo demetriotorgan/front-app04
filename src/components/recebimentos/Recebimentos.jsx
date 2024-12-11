@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Recebimentos.css';
-import { pagamentosPorMes } from '../../utils/pagamentoHandleApi';
+import { deletePagamentoNaLista, getListaPagamentos, pagamentosPorMes } from '../../utils/pagamentoHandleApi';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { formatarDataExibir, formataValor } from '../../utils/formatar';
 
@@ -8,6 +8,11 @@ const Recebimentos = () => {
   const [mes, setMes] = useState(1);
   const [ano, setAno] = useState(2024);
   const [pagamentos, setPagamentos] = useState('');
+  const [pagamentosCliente, setPagamentosCliente] = useState([]);
+
+  useEffect(()=>{
+    getListaPagamentos(setPagamentosCliente);
+  },[]);
 
   const valorRecebido = (pagamentos)=>{
       return pagamentos.reduce((acumulador, recebido)=> acumulador + recebido.valor, 0);
@@ -92,6 +97,46 @@ const Recebimentos = () => {
           ))}          
       </div>
       : '' }
+
+      <div className='pesquisar-pagamento-cliente'>
+          <label>Cliente</label>
+          <input 
+          type='text'
+          name='cliente'
+          />
+      </div>
+
+      <div className='lista-recebimentos'>
+          <h2><i className="fa-solid fa-cash-register"></i> Recebimentos</h2>
+          {pagamentosCliente.map((pagamento, index)=>(
+            <div className='card-recebimento' key={index}>
+            <p><strong><i className="fa-regular fa-user"></i> Cliente:{pagamento.cliente}</strong></p>
+            <p>Data: {formatarDataExibir(pagamento.data)}</p>
+            <p className='valor-pago'><strong><i className="fa-solid fa-piggy-bank"></i> {formataValor(pagamento.valor)}</strong></p>
+            <p>Tipo: {pagamento.tipo}</p>
+            <p>Produtos</p>
+          <table className="styled-table">
+          <thead>
+            <tr>
+              <th>Codigo</th>
+              <th>Descrição</th>
+              <th>Valor</th>                
+            </tr>
+          </thead>
+          <tbody className='lista-condicional'>      
+            {pagamento.produtos.map((produto,index)=>(
+              <tr key={index}>
+              <td>{produto.codigo}</td>
+              <td>{produto.descricao}</td>
+              <td>{produto.pv}</td>          
+            </tr>
+            ))} 
+          </tbody>
+        </table>
+        <button className='botao-excluir-pagamento' onClick={()=>deletePagamentoNaLista(pagamento._id,setPagamentosCliente)}><i className="fa-regular fa-trash-can"></i>Excluir</button>
+        </div>
+          ))}            
+      </div>
     </>
   )
 }

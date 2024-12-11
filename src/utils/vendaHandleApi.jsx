@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { notifyErroAtualizarVenda, notifyStatusAtualizado, notifyVendaAtualizada, notifyVendaExcluida } from './mensagens';
 import { getProdutosEstoque } from './estoqueHandleApi';
+import { updateProdutosListaPagamentos } from './pagamentoHandleApi';
 
 const getVendas = async(setVendas)=>{
     axios
@@ -96,6 +97,7 @@ const updateVenda = (formVenda, vendaId, setOpenModal, setFormVenda,setAdicionad
                     pagamentos:formVenda.pagamentos
             })
             .then((data)=>{
+                updateProdutosListaPagamentos(formVenda,vendaId);
                 console.log('Venda Atualizada')
                 console.log(data)
                 setOpenModal(false);
