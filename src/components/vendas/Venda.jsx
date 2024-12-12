@@ -50,6 +50,7 @@ useEffect(()=>{
   const addProduto = (item)=>{    
     setProdutosVendidos([...produtosVendidos, {_id:item._id}]);
     setAdicionados([...adicionados, item]);        
+    setProdutosEstoque(produtosEstoque.filter(produto => produto.codigo !== item.codigo));
     setProduto('');
     console.log('Lista de Adicionados ', adicionados);      
   }
