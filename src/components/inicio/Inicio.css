@@ -117,3 +117,31 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
+
+  .recentes-cliente{    
+    margin: 10px;
+  }
+
+  .card-recente p{
+    margin-top:5px;
+  }
+
+  .recentes-condicional-concluido{
+    text-align: center;
+    margin: 10px;
+    background-color: var(--color-2);
+    border: 1px solid var(--color-1);
+    color: #000;
+    padding: 10px;    
+    border-radius: 5px;
+  }
+
+  .recentes-condicional-devolvido{
+    text-align: center;
+    margin: 10px;
+    background-color: var(--color-3);
+    border: 1px solid var(--color-1);
+    color: var(--color-1);
+    padding: 10px;    
+    border-radius: 5px;
+  }
