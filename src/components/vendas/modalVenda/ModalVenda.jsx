@@ -3,19 +3,19 @@ import './ModalVenda.css'
 import { formatarData, formataValor } from '../../../utils/formatar'
 import { addVenda, updateVenda } from '../../../utils/vendaHandleApi';
 
-const ModalVenda = ({openModal, setOpenModal,formVenda,setFormVenda,notifyVendaSalva,notifyErroVenda,setAdicionados, produtosVendidos,setListaProdutos,setProdutosEstoque,produtosExcluidos,updateMode, vendaId,setVendas}) => {
+const ModalVenda = ({openModal, setOpenModal,formVenda,setFormVenda,notifyVendaSalva,notifyErroVenda,setAdicionados, produtosVendidos,setListaProdutos,setProdutosEstoque,produtosExcluidos,updateMode, vendaId,setVendas,setProdutosExcluidos,setProdutosVendidos}) => {
     const handleClose = ()=>{
         setOpenModal(false)
     }
 
     const enviarForm = ()=>{
         console.log('Enviando Form');        
-        addVenda(formVenda,notifyVendaSalva, setFormVenda, setOpenModal,notifyErroVenda,setAdicionados,produtosVendidos,setListaProdutos,setProdutosEstoque,setVendas);         
+        addVenda(formVenda,notifyVendaSalva, setFormVenda, setOpenModal,notifyErroVenda,setAdicionados,produtosVendidos,setListaProdutos,setProdutosEstoque,setVendas,setProdutosExcluidos,setProdutosVendidos);         
     }
 
     const atualizarVenda = ()=>{
         console.log('Atualiando Venda')
-        updateVenda(formVenda, vendaId, setOpenModal, setFormVenda,setAdicionados,produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque,produtosVendidos);
+        updateVenda(formVenda, vendaId, setOpenModal, setFormVenda,setAdicionados,produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque,produtosVendidos,setProdutosExcluidos, setProdutosVendidos);
         // console.log(produtosExcluidos);
     }
   return (

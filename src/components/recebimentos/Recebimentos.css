@@ -112,6 +112,10 @@
     color: var(--color-1);
 }
 
+.pesquisar-pagamento-cliente input{
+    margin: 0px;
+}
+
 .valor-pago{
     text-align: center;
 }

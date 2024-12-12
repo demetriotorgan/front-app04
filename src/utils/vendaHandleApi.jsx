@@ -12,7 +12,7 @@ const getVendas = async(setVendas)=>{
         })
 }
 
-const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,notifyErroVenda,setAdicionados, produtosVendidos,setListaProdutos,setProdutosEstoque,setVendas)=>{
+const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,notifyErroVenda,setAdicionados, produtosVendidos,setListaProdutos,setProdutosEstoque,setVendas,setProdutosVendidos)=>{
     try {        
         const response = await axios.post('https://api-app03.vercel.app/produtos/venda/save', {
             cliente:formVenda.cliente,
@@ -25,7 +25,7 @@ const addVenda = async(formVenda,notifyVendaSalva,setFormVenda, setOpenModal,not
         })        
         console.log('Venda cadastrada com sucesso', response.data)
         notifyVendaSalva();
-        updateStatus(produtosVendidos,setListaProdutos,setProdutosEstoque);
+        updateStatus(produtosVendidos,setListaProdutos,setProdutosEstoque,setProdutosVendidos);
         setOpenModal(false);
         setFormVenda({
             cliente:'',
@@ -64,7 +64,7 @@ const deleteVenda = (_id, setVendas, setCliente, setVendaPesquisada,produtosExcl
     }
 }
 
-const updateStatus = async (produtosVendidos,setListaProdutos,setProdutosEstoque)=>{
+const updateStatus = async (produtosVendidos,setListaProdutos,setProdutosEstoque,setProdutosVendidos)=>{
     try {
         console.log('Produtos Vendidos', produtosVendidos)
         const response = await axios
@@ -74,6 +74,7 @@ const updateStatus = async (produtosVendidos,setListaProdutos,setProdutosEstoque
                 })                
                     console.log('Status Atualizados')
                     console.log(response.data);
+                    setProdutosVendidos('');
                     notifyStatusAtualizado();
                     getProdutosEstoque(setListaProdutos,setProdutosEstoque);
                                 
@@ -82,7 +83,7 @@ const updateStatus = async (produtosVendidos,setListaProdutos,setProdutosEstoque
     }
 }
 
-const updateVenda = (formVenda, vendaId, setOpenModal, setFormVenda,setAdicionados,produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque,produtosVendidos)=>{
+const updateVenda = (formVenda, vendaId, setOpenModal, setFormVenda,setAdicionados,produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque,produtosVendidos,setProdutosExcluidos,setProdutosVendidos)=>{
     try {
         console.log(formVenda, vendaId)
         axios
@@ -112,11 +113,11 @@ const updateVenda = (formVenda, vendaId, setOpenModal, setFormVenda,setAdicionad
                 });
                 setAdicionados([]);
                 if(produtosExcluidos.length !==0){
-                    devolucaoProdutosEstoque(produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque)
+                    devolucaoProdutosEstoque(produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque,setProdutosExcluidos)
                 }                
                 getVendas(setVendas);
                 if(produtosVendidos.length !==0){
-                updateStatus(produtosVendidos,setListaProdutos,setProdutosEstoque)
+                updateStatus(produtosVendidos,setListaProdutos,setProdutosEstoque,setProdutosVendidos)
                 }
                 notifyVendaAtualizada();                
             })
@@ -130,7 +131,7 @@ const updateVenda = (formVenda, vendaId, setOpenModal, setFormVenda,setAdicionad
     }
 }
 
-const devolucaoProdutosEstoque = async(produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque)=>{
+const devolucaoProdutosEstoque = async(produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque,setProdutosExcluidos)=>{
 try {
     console.log('Produtos a devolver: ',produtosExcluidos);
     const response = await axios
@@ -141,7 +142,9 @@ try {
         console.log('Proutos devolvidos ao estoque')
         console.log(response.data)
         getVendas(setVendas);
-        getProdutosEstoque(setListaProdutos,setProdutosEstoque);
+        getProdutosEstoque(setListaProdutos,setProdutosEstoque);        
+        setProdutosExcluidos('');                
+        console.log('Produtos Excluido depois da OP:',produtosExcluidos);
         notifyStatusAtualizado();
 } catch (error) {
     console.error(error);

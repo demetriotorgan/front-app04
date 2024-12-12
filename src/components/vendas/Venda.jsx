@@ -30,6 +30,8 @@ const Venda = () => {
   const [updateMode, setUpdateMode] = useState(false);
   const [produtosExcluidos, setProdutosExcluidos] = useState([]);
   const [vendaId, setVendaId] = useState('');
+  const [clientePesquisado, setClientePesquisado] = useState('');
+  const [vendaPesquisada, setVendaPesquisada] = useState('');
 
 useEffect(()=>{
   getProdutosEstoque(setListaProdutos, setProdutosEstoque);      
@@ -73,6 +75,7 @@ useEffect(()=>{
     });
     setVendaId(venda._id);
     voltarAoTopo();    
+    setProdutosVendidos('');
   }  
 
   const excluirProduto = (codigo,id)=>{
@@ -92,6 +95,11 @@ useEffect(()=>{
     })
     setUpdateMode(!updateMode);
     setAdicionados([]);
+  }
+
+  const exibirVendaPesquisada =(item)=>{
+    setVendaPesquisada(item);
+    setClientePesquisado('');
   }
 
   const submitVendas = (e)=>{
@@ -133,6 +141,8 @@ useEffect(()=>{
    updateMode={updateMode}
    vendaId={vendaId}   
    setVendas={setVendas}
+   setProdutosExcluidos={setProdutosExcluidos}
+   setProdutosVendidos={setProdutosVendidos}
    />
    <div className='form-container'>
     <h2>Cadastrar Venda</h2>
@@ -233,6 +243,37 @@ useEffect(()=>{
           <button type='button' className='button-enviar' onClick={()=>limparCampos()}>Limpar Campos</button>
       </form>
    </div>
+  
+   <div className='pesquisar-venda-cliente'>
+          <label>Cliente</label>
+          <input 
+          type='text'
+          name='cliente'
+          placeholder='Digite o nome do cliente'
+          value={clientePesquisado}
+          onChange={(e)=>setClientePesquisado(e.target.value)}
+          />
+          <div className='dropdown'>
+              {vendas.filter(venda =>{
+                const nomeBusca = clientePesquisado.toLowerCase();
+                const nomeCompleto = venda.cliente.toLowerCase();
+                  return nomeBusca && nomeCompleto.startsWith(nomeBusca) && nomeCompleto !== nomeBusca;
+              }).map((item, index)=>(
+                <div className='dropdown-row' key={index} onClick={()=>exibirVendaPesquisada(item)}>
+                    {item.cliente}
+                </div>
+              ))}
+          </div>
+          {vendaPesquisada ? 
+            <div className='card-venda'>
+            <p>Cliente: <strong>{vendaPesquisada.cliente}</strong></p>
+            <p>Data: {formatarDataExibir(vendaPesquisada.data)}</p>
+            <p>Valor: {formataValor(vendaPesquisada.valor)}</p>
+            <button type='button' className='button-editar-venda' onClick={()=>atualizarVenda(vendaPesquisada)}>Editar Venda</button>
+            </div>
+          :''}          
+    </div>
+
    <div className='painel-vendas'>
         <h2>Vendas</h2>
         {vendas ?
@@ -242,7 +283,7 @@ useEffect(()=>{
           <p>Data: {formatarDataExibir(venda.data)}</p>
           <p>Valor: {formataValor(venda.valor)}</p>
           <button type='button' className='button-editar-venda' onClick={()=>atualizarVenda(venda)}>Editar Venda</button>
-        </div>
+          </div>
         ))        
          :''}
    </div>

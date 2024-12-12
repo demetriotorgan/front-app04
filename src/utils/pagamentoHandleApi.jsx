@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { notifyErroAtualizarPagamento, notifyErroAtualizarPagamentoNaLista, notifyErroPagamento, notifyPagamentoAtualizadoNaLista, notifyPagamentoDaListaExcluido, notifyPagamentoExcluido, notifyPagamentoInseridoNaLista, notifyPagamentosEncontrados, notifyPagemntoAtualizado, notifyPagemntoSalvo, notifySemPagamentosRegistrados } from './mensagens';
+import { notifyErroAtualizarPagamento, notifyErroAtualizarPagamentoNaLista, notifyErroPagamento, notifyListaDePagamentosSemVendaRegistrada, notifyPagamentoAtualizadoNaLista, notifyPagamentoDaListaExcluido, notifyPagamentoExcluido, notifyPagamentoInseridoNaLista, notifyPagamentosEncontrados, notifyPagemntoAtualizado, notifyPagemntoSalvo, notifySemPagamentosRegistrados } from './mensagens';
 import { getVendas } from './vendaHandleApi';
 
 const addPagamento = (_id, formPagamento, setOpenModal, setCliente, setVendas,setFormPagamento,setValor,dadosVenda)=>{
@@ -159,7 +159,7 @@ const updatePagamentoNaLista = async(vendaId, dadosVenda, formPagamento)=>{
     }
 }
 
-const deletePagamentoNaLista = async(_id,setPagamentosCliente)=>{
+const deletePagamentoNaLista = async(_id,setPagamentosCliente, setRecebimentoPesquisado)=>{
     try {
         console.log(_id)
         axios
@@ -167,6 +167,7 @@ const deletePagamentoNaLista = async(_id,setPagamentosCliente)=>{
             .then((data)=>{
                 console.log('Pagamento Excluido da lista com sucesso', data);
                 getListaPagamentos(setPagamentosCliente);
+                setRecebimentoPesquisado('');
                 notifyPagamentoDaListaExcluido();
             })
     } catch (error) {
@@ -174,21 +175,23 @@ const deletePagamentoNaLista = async(_id,setPagamentosCliente)=>{
     }
 }
 
-const updateProdutosListaPagamentos = async(formVenda,vendaId)=>{
+const updateProdutosListaPagamentos = async(formVenda,vendaId)=>{    
     try {
-        axios
+        const response = await axios
             .post('https://api-app03.vercel.app/produtos/venda/pagamentos/lista/update',{
                 vendaid: vendaId,
                 cliente: formVenda.cliente,
                 data: formVenda.data,                
                 produtos: formVenda.produtos
             })
-            .then((data)=>{
-                console.log('Produtos da lista de pagamentos atualizados',data)
-                
-            })
+            console.log(response.data);
     } catch (error) {
-        console.log(error)
+        if(error.response && error.response.status === 400){
+            console.log('Venda sem registro na lista de Pagamentos')
+            notifyListaDePagamentosSemVendaRegistrada();
+        }else{
+            console.log('Erro ao atualizar dados da venda na lista de pagamentos', error);
+        }        
     }
 }
 

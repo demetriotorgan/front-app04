@@ -205,6 +205,10 @@ useEffect(()=>{
           }
       </div>
       }
+
+      <div className='tabela-venda-clientes'>
+        <p>Tabela de Clientes</p>
+      </div>
       
       <div className='form-container'>
         <h2>Listar Vendas</h2>

@@ -275,6 +275,25 @@ const Condicional = () => {
     </div>
     : ''}      
 
+      <div className='pesquisar-condicional-cliente'>
+          <label>Cliente</label>
+          <input 
+          type='text'
+          name='cliente'
+          />
+      </div>
+      
+      <div className='painel-condicionais'>
+      <h2><i className="fa-solid fa-bag-shopping"></i> Todos os Condicionais</h2>    
+        <div className='pesquisar-condicional-cliente'>
+          <button className='button-listarCondicionais'>Condicionais em Aberto</button>
+        </div>
+
+        <div className='pesquisar-condicional-cliente'>
+          <button className='button-listarCondicionais'>Condicionais Devolvidos</button>
+        </div>
+      </div>
+      
     {listaCondicionais ? 
     <div className='painel-condicionais'>
       <h2><i className="fa-solid fa-bag-shopping"></i> Todos os Condicionais</h2>

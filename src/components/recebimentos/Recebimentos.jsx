@@ -9,6 +9,8 @@ const Recebimentos = () => {
   const [ano, setAno] = useState(2024);
   const [pagamentos, setPagamentos] = useState('');
   const [pagamentosCliente, setPagamentosCliente] = useState([]);
+  const [clientePesquisado, setClientePesquisado] = useState('');
+  const [recebimentoPesquisado, setRecebimentoPesquisado] = useState('');
 
   useEffect(()=>{
     getListaPagamentos(setPagamentosCliente);
@@ -23,6 +25,12 @@ const Recebimentos = () => {
         const somaPagamentos = venda.pagamentos.reduce((soma, pagamento)=> soma + pagamento.valor,0);
         return total + somaPagamentos;
       },0);
+  }
+
+  const exibirRecebimento = (item)=>{
+    console.log(item);
+    setRecebimentoPesquisado(item);
+    setClientePesquisado('');
   }
 
   return (
@@ -103,8 +111,52 @@ const Recebimentos = () => {
           <input 
           type='text'
           name='cliente'
+          placeholder='Digite o nome do cliente'
+          value={clientePesquisado}
+          onChange={(e)=>setClientePesquisado(e.target.value)}
           />
+            <div className='dropdown'>
+              {pagamentosCliente.filter(pagamento=>{
+                const nomeDeBusca = clientePesquisado.toLowerCase();
+                const nomeCompleto = pagamento.cliente.toLowerCase();
+                  return nomeDeBusca && nomeCompleto.startsWith(nomeDeBusca) && nomeCompleto !== nomeDeBusca;
+              }).map((item, index)=>(
+                <div className='dropdown-row' key={index} onClick={()=>exibirRecebimento(item)}>
+                    {item.cliente}
+                </div>                
+              ))}
+            </div>
+
+          {recebimentoPesquisado ?             
+              <div className='card-recebimento'>
+              <p><strong><i className="fa-regular fa-user"></i> Cliente:{recebimentoPesquisado.cliente}</strong></p>
+              <p>Data: {formatarDataExibir(recebimentoPesquisado.data)}</p>
+              <p className='valor-pago'><strong><i className="fa-solid fa-piggy-bank"></i> {formataValor(recebimentoPesquisado.valor)}</strong></p>
+              <p>Tipo: {recebimentoPesquisado.tipo}</p>
+              <p>Produtos</p>
+        <table className="styled-table">
+        <thead>
+          <tr>
+            <th>Codigo</th>
+            <th>Descrição</th>
+            <th>Valor</th>                
+          </tr>
+        </thead>
+        <tbody className='lista-condicional'>      
+          {recebimentoPesquisado.produtos.map((produto,index)=>(
+            <tr key={index}>
+            <td>{produto.codigo}</td>
+            <td>{produto.descricao}</td>
+            <td>{produto.pv}</td>          
+          </tr>
+          ))} 
+        </tbody>
+      </table>
+      <button className='botao-excluir-pagamento' onClick={()=>deletePagamentoNaLista(recebimentoPesquisado._id,setPagamentosCliente, setRecebimentoPesquisado)}><i className="fa-regular fa-trash-can"></i>Excluir</button>
+      </div>                     
+          :''}
       </div>
+
 
       <div className='lista-recebimentos'>
           <h2><i className="fa-solid fa-cash-register"></i> Recebimentos</h2>
@@ -133,7 +185,7 @@ const Recebimentos = () => {
             ))} 
           </tbody>
         </table>
-        <button className='botao-excluir-pagamento' onClick={()=>deletePagamentoNaLista(pagamento._id,setPagamentosCliente)}><i className="fa-regular fa-trash-can"></i>Excluir</button>
+        <button className='botao-excluir-pagamento' onClick={()=>deletePagamentoNaLista(pagamento._id,setPagamentosCliente,setRecebimentoPesquisado)}><i className="fa-regular fa-trash-can"></i>Excluir</button>
         </div>
           ))}            
       </div>

@@ -49,7 +49,7 @@ const Inicio = () => {
             </div>  
             ))}
       </div>      
-      <Link to="/recebimentos"><button className='button-info' type='button'>Ver Recebimentos</button></Link>
+      <Link to="/listarvendas"><button className='button-info' type='button'>Ver Recebimentos</button></Link>
     </div>
 
     <div className='info-container'>
