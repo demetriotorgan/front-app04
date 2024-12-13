@@ -4,14 +4,17 @@ import { Link } from 'react-router-dom'
 import { getCondicionaisRecentes, getRecebimentosRecentes, getVendasRecentes } from '../../utils/recentesHandleApi';
 import { formatarDataEditar, formatarDataExibir, formataValor, voltarAoTopo } from '../../utils/formatar';
 import loading from '../../assets/loading.svg'
+import { verificaConexaoComDB } from '../../utils/conexaoHandleApi';
 
 const Inicio = () => {
   const [vendasRecentes, setVendasRecentes] = useState([]);
   const [recebimentosRecentes, setRecebimentosRecentes] = useState([]);
   const [condicionaisRecentes, setCondicionaisRecentes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isConnect, setIsConnect] = useState(false);
 
   useEffect(()=>{
+    verificaConexaoComDB(setIsConnect);
     getVendasRecentes(setVendasRecentes, setIsLoading);
     getRecebimentosRecentes(setRecebimentosRecentes);
     getCondicionaisRecentes(setCondicionaisRecentes);
@@ -19,6 +22,9 @@ const Inicio = () => {
 
   return (
   <>
+    <div className='conexao-DB'>
+      {isConnect ? <i className="fa-solid fa-database"></i> :<div><small>Sem Conexão</small> <i className="fa-solid fa-face-frown"></i> <i className="fa-solid fa-exclamation"></i></div>}
+    </div>
     <div className="menu-container">
       <div className="menu-item item1"><Link to="/vendas"><i className="fa-solid fa-bag-shopping"></i>Cadastrar Venda</Link></div>
       <div className="menu-item item2"><Link to="/listarvendas"><i className="fa-solid fa-comments-dollar"></i>Listar Vendas</Link></div>

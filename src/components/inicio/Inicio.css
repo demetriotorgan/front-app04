@@ -154,3 +154,14 @@
     width: 70px;
     object-fit: cover;
   }
+
+  .conexao-DB{
+    text-align: left;
+    margin-left: 10px;    
+    color: var(--color-1);
+  }
+
+  .conexao-DB i{
+    font-size: small;
+    color: var(--color-1);
+  }
