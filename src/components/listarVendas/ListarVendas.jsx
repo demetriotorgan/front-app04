@@ -200,6 +200,7 @@ useEffect(()=>{
              <h3 className='valor-restante'> {formataValor((vendaPesquisada.valor)-(totalPagamentos(vendaPesquisada.pagamentos)))}</h3>
               <div className='inserir-pagamento'>
                   <button className='botao-adicionar-pagamento' onClick={()=>cadastrarPagamento(vendaPesquisada)}>Adicionar Pagamento</button> 
+                  <button className='botao-cancelar' onClick={()=>setCliente('')}><i className="fa-solid fa-ban"></i> Cancelar</button>
               </div>
           </div>          
           :''

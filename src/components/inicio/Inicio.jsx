@@ -3,14 +3,16 @@ import './Inicio.css'
 import { Link } from 'react-router-dom'
 import { getCondicionaisRecentes, getRecebimentosRecentes, getVendasRecentes } from '../../utils/recentesHandleApi';
 import { formatarDataEditar, formatarDataExibir, formataValor, voltarAoTopo } from '../../utils/formatar';
+import loading from '../../assets/loading.svg'
 
 const Inicio = () => {
   const [vendasRecentes, setVendasRecentes] = useState([]);
   const [recebimentosRecentes, setRecebimentosRecentes] = useState([]);
   const [condicionaisRecentes, setCondicionaisRecentes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(()=>{
-    getVendasRecentes(setVendasRecentes);
+    getVendasRecentes(setVendasRecentes, setIsLoading);
     getRecebimentosRecentes(setRecebimentosRecentes);
     getCondicionaisRecentes(setCondicionaisRecentes);
   },[]);
@@ -26,6 +28,7 @@ const Inicio = () => {
 
     <div className='info-container'>
       <h3><i className="fa-solid fa-cart-plus"></i>Vendas Recentes</h3>            
+      {isLoading ? <div className='loading'><img src={loading}/></div> : 
         <div className='recentes'>                  
             {vendasRecentes.map((venda, index)=>(
               <div className='card-recente' key={index}>
@@ -36,10 +39,12 @@ const Inicio = () => {
             ))}        
         <Link to="/vendas"><button className='button-info' type='button'>Ver Vendas</button></Link>        
         </div>
+      }
     </div>
     
     <div className='info-container'>
     <h3><i className="fa-solid fa-sack-dollar"></i>Recebimentos Recentes</h3>
+    {isLoading ? <div className='loading'><img src={loading} /></div> : 
       <div className='recentes'>        
             {recebimentosRecentes.map((recebimento, index)=>(
               <div className='card-recente' key={index}>
@@ -48,12 +53,14 @@ const Inicio = () => {
               <p>Data: {formatarDataExibir(recebimento.data)}</p>
             </div>  
             ))}
+            <Link to="/listarvendas"><button className='button-info' type='button'>Ver Recebimentos</button></Link>
       </div>      
-      <Link to="/listarvendas"><button className='button-info' type='button'>Ver Recebimentos</button></Link>
+    }      
     </div>
 
     <div className='info-container'>
     <h3><i className="fa-solid fa-money-check-dollar"></i>Últimos Condicionais</h3>
+      {isLoading ? <div className='loading'><img src={loading} /></div> : 
       <div className='recentes'>        
             {condicionaisRecentes.map((condicional, index)=>(
               <div className='card-recente' key={index}>
@@ -62,8 +69,9 @@ const Inicio = () => {
                 <p className={condicional.produtos.length == 0 ? 'recentes-condicional-concluido' : 'recentes-condicional-devolvido'}>Condicional: {condicional.produtos.length == 0 ? 'Devolvido' : 'Em Aberto'}</p>
               </div>
             ))}
+            <Link to="/condicional"><button className='button-info' type='button'>Ver Condicionais</button></Link>
       </div>
-      <Link to="/condicional"><button className='button-info' type='button'>Ver Condicionais</button></Link>
+      }      
     </div>    
   </>
   )

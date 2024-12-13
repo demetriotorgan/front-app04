@@ -1,11 +1,12 @@
 import axios from 'axios'
 
-const getVendasRecentes = async(setVendasRecentes)=>{
+const getVendasRecentes = async(setVendasRecentes, setIsLoading)=>{
     try {
         const response = await axios
             .get('https://api-app03.vercel.app/produtos/venda/recentes')
             console.log('Vendas recentes',response.data);
             setVendasRecentes(response.data);
+            setIsLoading(false);
     } catch (error) {
         console.error('Erro ao carregar vendas recentes',error);
     }

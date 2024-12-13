@@ -145,3 +145,12 @@
     padding: 10px;    
     border-radius: 5px;
   }
+
+  .loading{    
+    text-align: center;    
+  }
+
+  .loading img{
+    width: 70px;
+    object-fit: cover;
+  }
