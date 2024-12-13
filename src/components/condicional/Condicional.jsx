@@ -23,10 +23,10 @@ const Condicional = () => {
   const [openModalVenda, setOpenModalVenda] = useState(false);
   const [clientePesquisado, setClientePesquisado] = useState('');
   const [condicionalSelecionado, setCondicionalSelecionado] = useState('');
-  const [condicionaisAbertos, setCondicionaisAbertos] = useState('');
-  const [condicionaisDevolvidos, setCondicionaisDevolvidos] = useState('');
-  const [exibirAbertos, setExibirAbertos] = useState(true);
-  const [exibirDevolvidos, setExibirDevolvidos] = useState(true);
+  const [condicionaisAbertos, setCondicionaisAbertos] = useState([]);
+  const [condicionaisDevolvidos, setCondicionaisDevolvidos] = useState([]);
+  const [exibirAbertos, setExibirAbertos] = useState(false);
+  const [exibirDevolvidos, setExibirDevolvidos] = useState(false);
 
   const [formVenda, setFormVenda] = useState({
     cliente:'',
@@ -46,10 +46,9 @@ const Condicional = () => {
 
   useEffect(()=>{
     getProdutosEstoque(setListaProdutos, setProdutosEstoque);
-    getCondicionais(setListaCondicionais);
-    setCondicionaisAbertos(exibirCondicionaisAbertos());
-    setCondicionaisDevolvidos(exibirCondicionaisDevolvidos());
+    getCondicionais(setListaCondicionais);    
   },[]);
+
 
   useEffect(()=>{
     setFormCondicional((prevData)=>({
@@ -133,17 +132,22 @@ const Condicional = () => {
     setClientePesquisado('');
   }
 
-  const exibirCondicionaisAbertos =()=>{
+  const exibirCondicionaisAbertos =()=>{    
     const abertos = listaCondicionais.filter(condicional => condicional.produtos.length !== 0);
     setCondicionaisAbertos(abertos);
-    setExibirAbertos(!exibirAbertos);
-    // console.log(abertos);
+    if(abertos.length == 0){
+      notifySemCondicionaisAbertos();
+    }
+    setExibirAbertos(!exibirAbertos);        
   }
 
-  const exibirCondicionaisDevolvidos = ()=>{
+  const exibirCondicionaisDevolvidos = ()=>{    
     const devolvidos = listaCondicionais.filter(condicional => condicional.produtos.length == 0);    
-    setCondicionaisDevolvidos(devolvidos);
-    setExibirDevolvidos(!exibirDevolvidos)
+    setCondicionaisDevolvidos(devolvidos); 
+    if(devolvidos.length == 0){
+      notifySemCondicionaisDevolvidos();
+    }   
+    setExibirDevolvidos(!exibirDevolvidos);    
   }
  
   const submitCondicional = (e)=>{
@@ -354,7 +358,7 @@ const Condicional = () => {
     <div className='painel-condicionais'>
       <h2><i className="fa-solid fa-bag-shopping"></i> Todos os Condicionais</h2>    
         <div className='pesquisar-condicional-cliente'>
-          <button className='button-listarCondicionais' onClick={condicionaisAbertos ? ()=>exibirCondicionaisAbertos() : ()=>notifySemCondicionaisAbertos()}>Condicionais em Aberto</button>
+          <button className='button-listarCondicionais' onClick={()=>exibirCondicionaisAbertos()}>Condicionais em Aberto</button>
           {condicionaisAbertos && exibirAbertos ? 
             condicionaisAbertos.map((condicional, index)=>(
             <div className='card-condicional' key={index}>
@@ -379,7 +383,7 @@ const Condicional = () => {
         </div>
 
         <div className='pesquisar-condicional-cliente'>
-          <button className='button-listarCondicionais' onClick={condicionaisDevolvidos ? ()=>exibirCondicionaisDevolvidos() : ()=>notifySemCondicionaisDevolvidos()}>Condicionais Devolvidos</button>          
+          <button className='button-listarCondicionais' onClick={()=>exibirCondicionaisDevolvidos()}>Condicionais Devolvidos</button>          
           {condicionaisDevolvidos && exibirDevolvidos ? 
             condicionaisDevolvidos.map((condicional, index)=>(
             <div className='card-condicional' key={index}>
