@@ -119,3 +119,9 @@
 .valor-pago{
     text-align: center;
 }
+
+.resultados-busca{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;    
+}

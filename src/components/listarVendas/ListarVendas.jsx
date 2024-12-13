@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { deleteVenda, getVendas } from '../../utils/vendaHandleApi';
 import './ListarVendas.css'
-import { formatarDataEditar, formatarDataExibir, formataValor } from '../../utils/formatar';
+import { formatarDataEditar, formatarDataExibir, formataValor, voltarAoTopo } from '../../utils/formatar';
 import SemPagamento from './SemPagamento/SemPagamento';
 import PagamentoModal from './PagamentoModal/PagamentoModal';
 import { Bounce, ToastContainer } from 'react-toastify';
@@ -39,6 +39,7 @@ useEffect(()=>{
   const exibirVenda = (item)=>{
     setVendaPesquisada(item);
     setCliente(item.cliente);
+    voltarAoTopo();
   }
 
   const totalPagamentos = (pagamentos)=>{

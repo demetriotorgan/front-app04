@@ -3,6 +3,7 @@ import './Recebimentos.css';
 import { deletePagamentoNaLista, getListaPagamentos, pagamentosPorMes } from '../../utils/pagamentoHandleApi';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { formatarDataExibir, formataValor } from '../../utils/formatar';
+import loading from '../../assets/loading.svg'
 
 const Recebimentos = () => {
   const [mes, setMes] = useState(1);
@@ -11,9 +12,10 @@ const Recebimentos = () => {
   const [pagamentosCliente, setPagamentosCliente] = useState([]);
   const [clientePesquisado, setClientePesquisado] = useState('');
   const [recebimentoPesquisado, setRecebimentoPesquisado] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(()=>{
-    getListaPagamentos(setPagamentosCliente);
+    getListaPagamentos(setPagamentosCliente, setIsLoading);
   },[]);
 
   const valorRecebido = (pagamentos)=>{
@@ -122,7 +124,12 @@ const Recebimentos = () => {
                   return nomeDeBusca && nomeCompleto.startsWith(nomeDeBusca) && nomeCompleto !== nomeDeBusca;
               }).map((item, index)=>(
                 <div className='dropdown-row' key={index} onClick={()=>exibirRecebimento(item)}>
-                    {item.cliente}
+                  <div className='resultados-busca'>
+                  <span>{item.cliente}</span>
+                  <span>{formataValor(item.valor)}</span>
+                  <span>{formatarDataExibir(item.data)}</span>
+                  </div>
+                    
                 </div>                
               ))}
             </div>
@@ -157,7 +164,7 @@ const Recebimentos = () => {
           :''}
       </div>
 
-
+      {isLoading ? <div className='loading'><img src={loading} /></div> :
       <div className='lista-recebimentos'>
           <h2><i className="fa-solid fa-cash-register"></i> Recebimentos</h2>
           {pagamentosCliente.map((pagamento, index)=>(
@@ -189,6 +196,7 @@ const Recebimentos = () => {
         </div>
           ))}            
       </div>
+      }
     </>
   )
 }

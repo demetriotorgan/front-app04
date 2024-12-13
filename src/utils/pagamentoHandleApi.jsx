@@ -106,12 +106,13 @@ const pagamentosPorMes = (setPagamentos,mes, ano)=>{
 
 //--------------------Lista de Pagamentos-------------------//
 
-const getListaPagamentos = async(setPagamentosCliente)=>{
+const getListaPagamentos = async(setPagamentosCliente, setIsLoading)=>{
     try {
         const response = await axios
             .get('https://api-app03.vercel.app/produtos/venda/pagamentos/lista')
             console.log('Lista de Pagamentos ->',response.data);
             setPagamentosCliente(response.data);
+            setIsLoading(false);
 
     } catch (error) {
         console.log('Erro ao carregar lista de Pagamentos', error);        
