@@ -1,7 +1,7 @@
 .menu-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     width: 300px; /* Ajuste o tamanho do menu quadrado */
     height: 300px; /* Altura igual à largura para garantir que seja um quadrado */
     margin: 0 auto; /* Centraliza o menu na página */
@@ -19,7 +19,7 @@
     color: var(--color-1);
     cursor: pointer;
     transition: background-color 0.3s;    
-    margin: 10px;
+    margin: 5px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
@@ -77,8 +77,31 @@
     flex-direction: column;
     text-decoration: none;
     color: var(--text-color);
-  } 
+  }
+  
+  .item5 {    
+    background-color: var(--color-1);;
+    text-align: center;
+  }
 
+  .item5 a{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text-color);
+  }
+
+  .item6 {    
+    background-color: var(--color-1);;
+    text-align: center;
+  }
+
+  .item6 a{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text-color);
+  }
 
   .info-container{
     width: 300px; /* Ajuste o tamanho do menu quadrado */    

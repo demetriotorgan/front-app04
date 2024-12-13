@@ -30,6 +30,8 @@ const Inicio = () => {
       <div className="menu-item item2"><Link to="/listarvendas"><i className="fa-solid fa-comments-dollar"></i>Listar Vendas</Link></div>
       <div className="menu-item item3"><Link to="/estoque"><i className="fa-solid fa-gear"></i>Estoque</Link></div>
       <div className="menu-item item4"><Link to="/condicional"><i className="fa-solid fa-money-check-dollar"></i>Condicionais</Link></div>
+      <div className='menu-item item5'><Link to="/recebimentos"><i className="fa-solid fa-cash-register"></i>Recebimentos</Link></div>
+      <div className='menu-item item6'><Link to="/relatorios"><i className="fa-solid fa-file-invoice"></i>Relatórios</Link></div>
     </div>
 
     <div className='info-container'>

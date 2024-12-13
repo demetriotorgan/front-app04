@@ -11,6 +11,7 @@ import Condicional from './components/condicional/Condicional.jsx'
 import Venda from './components/vendas/Venda.jsx'
 import ListarVendas from './components/listarVendas/ListarVendas.jsx'
 import Recebimentos from './components/recebimentos/Recebimentos.jsx'
+import Relatorios from './components/relatorios/Relatorios.jsx'
 
 const router = createBrowserRouter([
   {   
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path:"/recebimentos",
         element:<Recebimentos/>
+      },
+      {
+        path:"/relatorios",
+        element:<Relatorios/>
       }
     ]
   }
