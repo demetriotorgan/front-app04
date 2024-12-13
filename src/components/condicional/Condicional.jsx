@@ -5,6 +5,7 @@ import { formatarDataEditar, formatarDataExibir, formataValor, voltarAoTopo } fr
 import { saveCondicional, getCondicionais, deletarCondicional, updateCondicional } from '../../utils/condicionalHandleApi';
 import { Bounce, ToastContainer } from 'react-toastify';
 import ModalVendaCondicional from './modalVendaCondicional/ModalVendaCondicional';
+import { notifySemCondicionaisAbertos, notifySemCondicionaisDevolvidos } from '../../utils/mensagens';
 
 const Condicional = () => {
   const [produtosEstoque, setProdutosEstoque] = useState([]);
@@ -20,6 +21,13 @@ const Condicional = () => {
   const [condicionalId, setCondicionalId] = useState(''); 
   const [vendidosId, setVendidosId] = useState([]);
   const [openModalVenda, setOpenModalVenda] = useState(false);
+  const [clientePesquisado, setClientePesquisado] = useState('');
+  const [condicionalSelecionado, setCondicionalSelecionado] = useState('');
+  const [condicionaisAbertos, setCondicionaisAbertos] = useState('');
+  const [condicionaisDevolvidos, setCondicionaisDevolvidos] = useState('');
+  const [exibirAbertos, setExibirAbertos] = useState(true);
+  const [exibirDevolvidos, setExibirDevolvidos] = useState(true);
+
   const [formVenda, setFormVenda] = useState({
     cliente:'',
     data:'',
@@ -39,6 +47,8 @@ const Condicional = () => {
   useEffect(()=>{
     getProdutosEstoque(setListaProdutos, setProdutosEstoque);
     getCondicionais(setListaCondicionais);
+    setCondicionaisAbertos(exibirCondicionaisAbertos());
+    setCondicionaisDevolvidos(exibirCondicionaisDevolvidos());
   },[]);
 
   useEffect(()=>{
@@ -88,6 +98,8 @@ const Condicional = () => {
       produtos:setAdicionados(condicional.produtos)
     });
     setCondicionalId(condicional._id);
+    setExibirAbertos(false);
+    setExibirDevolvidos(false);
     voltarAoTopo();
   }
 
@@ -113,6 +125,25 @@ const Condicional = () => {
     });
     setModeDevolucao(false);
     getProdutosEstoque(setListaProdutos, setProdutosEstoque);
+    setCondicionalSelecionado('');
+  }
+
+  const condicionalPesquisado =(item)=>{
+    setCondicionalSelecionado(item);
+    setClientePesquisado('');
+  }
+
+  const exibirCondicionaisAbertos =()=>{
+    const abertos = listaCondicionais.filter(condicional => condicional.produtos.length !== 0);
+    setCondicionaisAbertos(abertos);
+    setExibirAbertos(!exibirAbertos);
+    // console.log(abertos);
+  }
+
+  const exibirCondicionaisDevolvidos = ()=>{
+    const devolvidos = listaCondicionais.filter(condicional => condicional.produtos.length == 0);    
+    setCondicionaisDevolvidos(devolvidos);
+    setExibirDevolvidos(!exibirDevolvidos)
   }
  
   const submitCondicional = (e)=>{
@@ -130,15 +161,17 @@ const Condicional = () => {
         }))
         console.log(formVenda)
         setOpenModalVenda(true);
+        setCondicionalSelecionado('');
       } else{
         console.log('Atualizar Condicional');
         console.log('Produtos Excluidos', produtosExcluidos);
         console.log('Produtos para Condicional ->', produtosCondicional);
-        updateCondicional(condicionalId, formCondicional, produtosExcluidos, setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados, setProdutosExcluidos,setListaCondicionais, produtosCondicional,setProdutosCondicional, setModeDevolucao,produtosExcluidos);
+        updateCondicional(condicionalId, formCondicional, produtosExcluidos, setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados, setProdutosExcluidos,setListaCondicionais, produtosCondicional,setProdutosCondicional, setModeDevolucao,produtosExcluidos, setCondicionalSelecionado(''));        
       }
     }else{
       console.log('Produto para Condiconal: ',produtosCondicional);
       saveCondicional(formCondicional, setFormCondicional, setAdicionados, produtosCondicional,setListaProdutos, setProdutosEstoque, setListaCondicionais, setProdutosCondicional);
+      setCondicionalSelecionado('');
     }    
   }
 
@@ -175,6 +208,8 @@ const Condicional = () => {
       setProdutosVendido={setProdutosVendido}
       produtosExcluidos={produtosExcluidos}
       setProdutosCondicional={setProdutosCondicional}
+      setModeDevolucao={setModeDevolucao}
+      setCondicionalSelecionado={setCondicionalSelecionado}
       
   />
 
@@ -241,7 +276,7 @@ const Condicional = () => {
       <button type='submit' className='button-salvar-condicional' disabled = {modeDevolucao ? false : (adicionados.length === 0 ? true : false)}><i className="fa-solid fa-briefcase"></i>{modeDevolucao ? ' Atualizar Condiconal' : ' Salvar Condicional'}</button>
       <button type='button' className='button-limpar-condicional' onClick={()=>cancelarCondicional()}><i className="fa-solid fa-ban"></i> Cancelar Condicional</button>
     </form>    
-    </div>
+    </div>    
 
     {produtosDevolvidos ?
     <div className='painel-devolucao'>
@@ -273,28 +308,104 @@ const Condicional = () => {
       <button className='button-cancelar' onClick={()=>cancelarCondicional()}>Cancelar</button>
       </div>        
     </div>
-    : ''}      
+    : ''}            
 
-      <div className='pesquisar-condicional-cliente'>
+<div className='pesquisar-condicional-cliente'>
           <label>Cliente</label>
           <input 
           type='text'
           name='cliente'
+          placeholder='Digite o nome do cliente'
+          value={clientePesquisado}
+          onChange={(e)=>setClientePesquisado(e.target.value)}
           />
-      </div>
+            <div className='dropdown'>
+              {listaCondicionais ? listaCondicionais.filter((condicional)=>{
+                const nomeBusca = clientePesquisado.toLowerCase();
+                const nomeCompleto = condicional.cliente.toLowerCase();
+                  return nomeBusca && nomeCompleto.startsWith(nomeBusca) && nomeCompleto !== nomeBusca;
+              }).map((item, index)=>(
+                <div className='dropdown-row' key={index} onClick={()=>condicionalPesquisado(item)}>
+                    {item.cliente}
+                </div>
+              )) : ''}
+            </div>
+          {condicionalSelecionado ? 
+            <div className='card-condicional'>
+            <p>Cliente: <strong>{condicionalSelecionado.cliente}</strong></p>
+            <p>Data: {formatarDataExibir(condicionalSelecionado.data)} </p>
+            <p>Produtos:</p>
+            <ul className='lista-condicional'>
+              {condicionalSelecionado.produtos.length == 0 ? 
+              <div className='condiconal-encerrado'>
+                  <h3>DEVOLVIDO</h3>
+              </div>
+              :
+              condicionalSelecionado.produtos.map((produto, index)=>(
+                <li key={index}>{produto.codigo}</li>              
+              ))}            
+            </ul>
+            <button className='button-devolucao-condicional' onClick={()=>devolucaoCondicional(condicionalSelecionado)} disabled={condicionalSelecionado.produtos.length ==0 ? true : false}><i className="fa-solid fa-rotate-left"></i> Devolução</button>
+            <button className='button-excluir-condicional' onClick={()=>deletarCondicional(condicionalSelecionado._id,condicionalSelecionado.produtos, setListaCondicionais,setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados, setCondicionalSelecionado(''))}><i className="fa-regular fa-trash-can"></i> Excluir</button>
+        </div>
+          :''}
+    </div>
       
-      <div className='painel-condicionais'>
+    <div className='painel-condicionais'>
       <h2><i className="fa-solid fa-bag-shopping"></i> Todos os Condicionais</h2>    
         <div className='pesquisar-condicional-cliente'>
-          <button className='button-listarCondicionais'>Condicionais em Aberto</button>
+          <button className='button-listarCondicionais' onClick={condicionaisAbertos ? ()=>exibirCondicionaisAbertos() : ()=>notifySemCondicionaisAbertos()}>Condicionais em Aberto</button>
+          {condicionaisAbertos && exibirAbertos ? 
+            condicionaisAbertos.map((condicional, index)=>(
+            <div className='card-condicional' key={index}>
+              <p>Cliente: <strong>{condicional.cliente}</strong></p>
+              <p>Data: {formatarDataExibir(condicional.data)} </p>
+              <p>Produtos:</p>
+              <ul className='lista-condicional'>
+                {condicional.produtos.length == 0 ? 
+                <div className='condiconal-encerrado'>
+                    <h3>DEVOLVIDO</h3>
+                </div>
+                :
+                condicional.produtos.map((produto, index)=>(
+                  <li key={index}>{produto.codigo}</li>              
+                ))}            
+              </ul>    
+              <button className='button-devolucao-condicional' onClick={()=>devolucaoCondicional(condicional)} disabled={condicional.produtos.length ==0 ? true : false}><i className="fa-solid fa-rotate-left"></i> Devolução</button>
+              <button className='button-excluir-condicional' onClick={()=>deletarCondicional(condicional._id,condicional.produtos, setListaCondicionais,setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados, setExibirAbertos(false))}><i className="fa-regular fa-trash-can"></i> Excluir</button>
+            </div>
+          ))
+          :''}
         </div>
 
         <div className='pesquisar-condicional-cliente'>
-          <button className='button-listarCondicionais'>Condicionais Devolvidos</button>
-        </div>
-      </div>
+          <button className='button-listarCondicionais' onClick={condicionaisDevolvidos ? ()=>exibirCondicionaisDevolvidos() : ()=>notifySemCondicionaisDevolvidos()}>Condicionais Devolvidos</button>          
+          {condicionaisDevolvidos && exibirDevolvidos ? 
+            condicionaisDevolvidos.map((condicional, index)=>(
+            <div className='card-condicional' key={index}>
+              <p>Cliente: <strong>{condicional.cliente}</strong></p>
+              <p>Data: {formatarDataExibir(condicional.data)} </p>
+              <p>Produtos:</p>
+              <ul className='lista-condicional'>
+                {condicional.produtos.length == 0 ? 
+                <div className='condiconal-encerrado'>
+                    <h3>DEVOLVIDO</h3>
+                </div>
+                :
+                condicional.produtos.map((produto, index)=>(
+                  <li key={index}>{produto.codigo}</li>              
+                ))}            
+              </ul>    
+              <button className='button-devolucao-condicional' onClick={()=>devolucaoCondicional(condicional)} disabled={condicional.produtos.length ==0 ? true : false}><i className="fa-solid fa-rotate-left"></i> Devolução</button>
+              <button className='button-excluir-condicional' onClick={()=>deletarCondicional(condicional._id,condicional.produtos, setListaCondicionais,setListaProdutos, setProdutosEstoque, setFormCondicional, setAdicionados, setExibirDevolvidos(false))}><i className="fa-regular fa-trash-can"></i> Excluir</button>
+            </div>
+            ))
+          :''}        
+        </div>                
+    </div>
+              
       
-    {listaCondicionais ? 
+    {/* {listaCondicionais ? 
     <div className='painel-condicionais'>
       <h2><i className="fa-solid fa-bag-shopping"></i> Todos os Condicionais</h2>
       {listaCondicionais.map((condicional, index)=>(
@@ -317,7 +428,7 @@ const Condicional = () => {
       </div>
       ))}
     </div>
-    : '' }
+    : '' } */}
     </>
   )
 }

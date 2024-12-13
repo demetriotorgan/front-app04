@@ -3,7 +3,7 @@ import './ModalVendaCondicional.css'
 import { formataValor } from '../../../utils/formatar';
 import { addVendaCondicional } from '../../../utils/condicionalHandleApi';
 
-const ModalVendaCondicional = ({openModalVenda, setOpenModalVenda,formVenda,setFormVenda,formCondicional, vendidosId,setListaProdutos,setProdutosEstoque,setListaCondicionais,produtosVendido, setAdicionados,condicionalId,setFormCondicional,setProdutosVendido,produtosExcluidos,setProdutosCondicional}) => {
+const ModalVendaCondicional = ({openModalVenda, setOpenModalVenda,formVenda,setFormVenda,formCondicional, vendidosId,setListaProdutos,setProdutosEstoque,setListaCondicionais,produtosVendido, setAdicionados,condicionalId,setFormCondicional,setProdutosVendido,produtosExcluidos,setProdutosCondicional,setModeDevolucao,setCondicionalSelecionado}) => {
     
     const handleClose =()=>{
         setOpenModalVenda(false);        
@@ -23,7 +23,7 @@ const ModalVendaCondicional = ({openModalVenda, setOpenModalVenda,formVenda,setF
         console.log('Enviando Venda: ->', formVenda);
         console.log('Form Condicional: ->', formCondicional);
         console.log('Ids Vendidos: ->', vendidosId);
-        addVendaCondicional(formVenda,vendidosId,setListaProdutos,setProdutosEstoque,setOpenModalVenda,setAdicionados,setListaCondicionais,produtosVendido, formCondicional,condicionalId,setFormCondicional,setProdutosVendido,produtosExcluidos,setProdutosCondicional);
+        addVendaCondicional(formVenda,vendidosId,setListaProdutos,setProdutosEstoque,setOpenModalVenda,setAdicionados,setListaCondicionais,produtosVendido, formCondicional,condicionalId,setFormCondicional,setProdutosVendido,produtosExcluidos,setProdutosCondicional, setModeDevolucao(false), setCondicionalSelecionado(''));
     }
   return (
     <>

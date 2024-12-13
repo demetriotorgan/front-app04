@@ -77,6 +77,7 @@ useEffect(()=>{
     setVendaId(venda._id);
     voltarAoTopo();    
     setProdutosVendidos('');
+    setVendaPesquisada('');
   }  
 
   const excluirProduto = (codigo,id)=>{
@@ -106,6 +107,7 @@ useEffect(()=>{
   const submitVendas = (e)=>{
     e.preventDefault()
     setOpenModal(true);
+    setVendaPesquisada('');
     console.log('Enviando formVenda: ', formVenda);
     // console.log('Produtos Vendidos: ',produtosVendidos);
     console.log('Produtos Excluidos', produtosExcluidos);
@@ -144,6 +146,7 @@ useEffect(()=>{
    setVendas={setVendas}
    setProdutosExcluidos={setProdutosExcluidos}
    setProdutosVendidos={setProdutosVendidos}
+   setUpdateMode={setUpdateMode}
    />
    <div className='form-container'>
     <h2>Cadastrar Venda</h2>

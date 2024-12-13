@@ -57,7 +57,7 @@ const deleteVenda = (_id, setVendas, setCliente, setVendaPesquisada,produtosExcl
                 setCliente('');
                 setVendaPesquisada('');
                 notifyVendaExcluida();
-                devolucaoProdutosEstoque(produtosExcluidos,setVendas,setListaProdutos,setProdutosEstoque)
+                devolucaoDeProdutosDaVendaExcluida(produtosExcluidos,setVendas);
             })
     } catch (error) {
         console.error('Erro ao excluir venda');
@@ -143,12 +143,27 @@ try {
         console.log(response.data)
         getVendas(setVendas);
         getProdutosEstoque(setListaProdutos,setProdutosEstoque);        
-        setProdutosExcluidos('');                
-        console.log('Produtos Excluido depois da OP:',produtosExcluidos);
+        setProdutosExcluidos('');                        
         notifyStatusAtualizado();
 } catch (error) {
     console.error(error);
 }
 }
 
-export {addVenda, getVendas, deleteVenda, updateStatus, updateVenda}
+const devolucaoDeProdutosDaVendaExcluida = async(produtosExcluidos, setVendas)=>{
+    try {
+        const response = await axios
+        .put('https://api-app03.vercel.app/produtos/venda/devolucao',
+            {
+                produtos: produtosExcluidos
+            })
+            console.log('Produto devolvidos ao estoque da venda excluida')
+            console.log(response.data);
+            getVendas(setVendas);
+            notifyStatusAtualizado();            
+    } catch (error) {
+        console.log('Erro ao devolver produtos ao estoque da venda excluida', error);
+    }
+}
+
+export {addVenda, getVendas, deleteVenda, updateStatus, updateVenda,devolucaoDeProdutosDaVendaExcluida}

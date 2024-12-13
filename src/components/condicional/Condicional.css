@@ -34,8 +34,8 @@
     background-color: var(--color-2);
     padding: 5px;
     margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     border-radius: 5px;
 }
 
@@ -51,6 +51,8 @@
     border: 1px solid var(--color-1);
     color: var(--color-1);
     margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -186,10 +188,8 @@
 
 .pesquisar-condicional-cliente{
     border: 1px solid var(--color-1);    
-    background-color: var(--color-3);
-    margin: 10px 10px;
-    border-radius: 10px;
-    padding: 10px;
+    background-color: var(--color-3);    
+    border-radius: 10px;   
 }
 
 .pesquisar-condicional-cliente label{
@@ -208,5 +208,17 @@
     border-radius: 8px;
     cursor: pointer;  
     margin-top: 10px;    
+    margin-bottom: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;         
+}
+
+.pesquisar-condicional-cliente{
+    border: 1px solid var(--color-1);    
+    margin: 10px 15px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.pesquisar-condicional-cliente input{
+    margin: 0px;
 }

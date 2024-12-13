@@ -187,7 +187,8 @@ useEffect(()=>{
           :
           <div className='inserir-pagamento'>
                   <SemPagamento data={vendaPesquisada.data} />
-                  <button className='botao-adicionar-pagamento' onClick={()=>cadastrarPagamento(vendaPesquisada)}>Adicionar Pagamento</button> 
+                  <button className='botao-adicionar-pagamento' onClick={()=>cadastrarPagamento(vendaPesquisada)}><i className="fa-solid fa-comment-dollar"></i> Adicionar Pagamento</button> 
+                  <button className='botao-cancelar' onClick={()=>setCliente('')}><i className="fa-solid fa-ban"></i> Cancelar</button>
           </div>
           }
 
@@ -206,9 +207,27 @@ useEffect(()=>{
       </div>
       }
 
-      <div className='tabela-venda-clientes'>
-        <p>Tabela de Clientes</p>
-      </div>
+    <div className='tabela-venda-clientes'>
+        <h2>Clientes</h2>
+          <table className="styled-table-cliente">
+          <thead>          
+            <tr>
+              <th>Nome</th>
+              <th>Data</th>
+              <th>Valor</th>              
+            </tr>
+          </thead>
+          <tbody className='lista-condicional'>      
+            {vendas.map((venda, index)=>(
+              <tr key={index}>
+                <td>{venda.cliente}<br/> <i className="fa-solid fa-eye" onClick={()=>exibirVenda(venda)}></i></td>
+                <td>{formatarDataExibir(venda.data)}</td>
+                <td>{formataValor(venda.valor)}</td>                          
+              </tr>
+            ))} 
+          </tbody>
+        </table>
+    </div>
       
       <div className='form-container'>
         <h2>Listar Vendas</h2>

@@ -351,4 +351,29 @@ const notifyListaDePagamentosSemVendaRegistrada = () => toast.error('Venda não 
     transition: Bounce,
 });
 
-export { notifySucesso, notifyErro, deleteSucesso, notifyErroDelete, notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyVendaSalva, notifyErroVenda, notifyVendaExcluida, notifyPagemntoSalvo, notifyErroPagamento, notifyPagamentoExcluido, notifyPagemntoAtualizado, notifyErroAtualizarPagamento, notifyStatusAtualizado, notifySemPagamentosRegistrados, notifyPagamentosEncontrados, notifyVendaAtualizada, notifyErroAtualizarVenda, notifyErroCarregarProdutos, notifyCondiconalSalvo, notifyStatusCondicional, notifyCondicionalExcluido, notifyCondicionalAtualizado, notifyPagamentoInseridoNaLista, notifyPagamentoAtualizadoNaLista, notifyErroAtualizarPagamentoNaLista,notifyPagamentoDaListaExcluido, notifyListaDePagamentosSemVendaRegistrada}
+const notifySemCondicionaisAbertos = () => toast.info('Você não possui condicionais em aberto', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Bounce,
+});
+
+const notifySemCondicionaisDevolvidos = () => toast.info('Você não possui condicionais devolvidos', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Bounce,
+});
+
+
+export { notifySucesso, notifyErro, deleteSucesso, notifyErroDelete, notifyAtualizarProduto, notifyAtualizarProdutoErro, notifyVendaSalva, notifyErroVenda, notifyVendaExcluida, notifyPagemntoSalvo, notifyErroPagamento, notifyPagamentoExcluido, notifyPagemntoAtualizado, notifyErroAtualizarPagamento, notifyStatusAtualizado, notifySemPagamentosRegistrados, notifyPagamentosEncontrados, notifyVendaAtualizada, notifyErroAtualizarVenda, notifyErroCarregarProdutos, notifyCondiconalSalvo, notifyStatusCondicional, notifyCondicionalExcluido, notifyCondicionalAtualizado, notifyPagamentoInseridoNaLista, notifyPagamentoAtualizadoNaLista, notifyErroAtualizarPagamentoNaLista,notifyPagamentoDaListaExcluido, notifyListaDePagamentosSemVendaRegistrada, notifySemCondicionaisAbertos, notifySemCondicionaisDevolvidos}

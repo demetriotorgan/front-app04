@@ -217,3 +217,54 @@
     margin: 10px;
     border-radius: 5px;
 }
+
+.tabela-venda-clientes{
+    border: 1px solid var(--color-1);   
+    border-radius: 10px;
+    margin-top:15px;
+    margin-bottom:15px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px;
+}
+
+.tabela-venda-clientes h2{
+    color: var(--color-1);
+    padding: 10px;
+}
+
+.styled-table-cliente{
+    border-collapse: collapse;
+    margin: 15px auto;
+    font-size: 1rem;
+    min-width: 95%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;    
+}
+
+.styled-table-cliente thead tr{
+    background-color: var(--color-2);
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table-cliente td, .styled-table-cliente th{    
+    text-align: center;
+    padding: 12px 15px;    
+    border: 1px solid #dddddd;
+    
+}
+
+.botao-cancelar{
+    width: 100%;
+    padding: 8px;        
+    background-color: var(--color-3);
+    color:var(--color-1);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;      
+    margin-bottom: 10px;  
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;            
+}
