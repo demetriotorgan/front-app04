@@ -265,18 +265,21 @@ const Condicional = () => {
         <th>Codigo</th>
         <th>Desc</th>
         <th>Valor</th>                
-      </tr>
+      </tr>      
     </thead>
     <tbody className='lista-condicional'>      
         {adicionados.map((item, index)=>(
           <tr key={index}>
           <td>{item.codigo} {modeDevolucao ? <i className="fa-solid fa-reply-all" onClick={()=>devolverProduto(item)}></i> :<i className="fa-regular fa-trash-can" onClick={()=>excluirProduto(item)}></i>}</td>
           <td>{item.descricao}</td>
-          <td>{formataValor(item.pv)} {modeDevolucao ? <i className="fa-solid fa-sack-dollar" onClick={()=>venderProduto(item)}></i> :''} </td>          
-        </tr>
+          <td>{formataValor(item.pv)} {modeDevolucao ? <i className="fa-solid fa-sack-dollar" onClick={()=>venderProduto(item)}></i> :''} </td>                            
+        </tr>        
         ))}        
     </tbody>
   </table>
+  <div className='totalprodutos'>
+    <p>Total de Produtos: <strong>{adicionados.length}</strong></p>
+  </div>
       <button type='submit' className='button-salvar-condicional' disabled = {modeDevolucao ? false : (adicionados.length === 0 ? true : false)}><i className="fa-solid fa-briefcase"></i>{modeDevolucao ? ' Atualizar Condiconal' : ' Salvar Condicional'}</button>
       <button type='button' className='button-limpar-condicional' onClick={()=>cancelarCondicional()}><i className="fa-solid fa-ban"></i> Cancelar Condicional</button>
     </form>    
@@ -289,9 +292,13 @@ const Condicional = () => {
             <div className='card-devolucao' key={index}>
                 <p>Código: <strong>{produto.codigo}</strong> </p>
                 <p>Descrição: {produto.descricao}</p>
-                <p>Valor: {formataValor(produto.pv)}</p>
+                <p>Valor: {formataValor(produto.pv)}</p>                
             </div>
-        ))}                
+            
+        ))}
+        <div className='totalprodutos'>
+            <p>Produtos Devolvidos: {produtosDevolvidos.length}</p>
+        </div>
       <div className='cancelar-vendas'>
       <button className='button-cancelar' onClick={()=>cancelarCondicional()}>Cancelar</button>
       </div>        
@@ -338,7 +345,7 @@ const Condicional = () => {
             <div className='card-condicional'>
             <p>Cliente: <strong>{condicionalSelecionado.cliente}</strong></p>
             <p>Data: {formatarDataExibir(condicionalSelecionado.data)} </p>
-            <p>Produtos:</p>
+            <p>Produtos: {condicionalSelecionado.produtos.length}</p>
             <ul className='lista-condicional'>
               {condicionalSelecionado.produtos.length == 0 ? 
               <div className='condiconal-encerrado'>
@@ -364,7 +371,7 @@ const Condicional = () => {
             <div className='card-condicional' key={index}>
               <p>Cliente: <strong>{condicional.cliente}</strong></p>
               <p>Data: {formatarDataExibir(condicional.data)} </p>
-              <p>Produtos:</p>
+              <p>Produtos: <strong>{condicional.produtos.length}</strong></p>
               <ul className='lista-condicional'>
                 {condicional.produtos.length == 0 ? 
                 <div className='condiconal-encerrado'>

@@ -222,3 +222,10 @@
 .pesquisar-condicional-cliente input{
     margin: 0px;
 }
+
+.totalprodutos{
+    border: 1px solid var(--text-color);
+    padding: 10px;
+    border-radius: 5px;
+}
+

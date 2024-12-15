@@ -70,7 +70,7 @@
   /* Efeito de hover nas linhas */
   .styled-table tbody tr:hover {
     background-color: #f3f3f3;
-  }
+  }  
   
   /* Última linha sem borda inferior */
   .styled-table tbody tr:last-of-type {
