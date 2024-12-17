@@ -1,4 +1,5 @@
 //import {format, parse} from 'date-fns'
+import { differenceInDays, subDays } from 'date-fns';
 import { format, toZonedTime } from 'date-fns-tz';
 
 
@@ -46,8 +47,14 @@ const voltarAoTopo = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
+const subData = (data)=>{
+    const diaAtual = new Date();
+    return differenceInDays(diaAtual,data)
+}
 
-export{formataValor, formatarData, limparCampos, formatarDataEditar,formatarDataExibir, voltarAoTopo}
+
+
+export{formataValor, formatarData, limparCampos, formatarDataEditar,formatarDataExibir, voltarAoTopo, subData}
 
 //Formatar Data
 // console.log('Exibir data',data);

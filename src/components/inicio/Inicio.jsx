@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './Inicio.css'
 import { Link } from 'react-router-dom'
 import { getCondicionaisRecentes, getRecebimentosRecentes, getVendasRecentes } from '../../utils/recentesHandleApi';
-import { formatarDataEditar, formatarDataExibir, formataValor, voltarAoTopo } from '../../utils/formatar';
+import { formatarDataEditar, formatarDataExibir, formataValor, subData, voltarAoTopo } from '../../utils/formatar';
 import loading from '../../assets/loading.svg'
 import { verificaConexaoComDB } from '../../utils/conexaoHandleApi';
 
@@ -75,6 +75,9 @@ const Inicio = () => {
                 <p className='recentes-cliente'><i className="fa-solid fa-person-circle-plus"></i><strong> {condicional.cliente}</strong></p>                
                 <p>Data: {formatarDataExibir(condicional.data)}</p>
                 <p className={condicional.produtos.length == 0 ? 'recentes-condicional-concluido' : 'recentes-condicional-devolvido'}>Condicional: {condicional.produtos.length == 0 ? 'Devolvido' : 'Em Aberto'}</p>
+                {condicional.produtos.length == 0 ? '':
+                <p>Total de dias: {subData(condicional.data)}</p>
+                }
               </div>
             ))}
             <Link to="/condicional"><button className='button-info' type='button'>Ver Condicionais</button></Link>
